@@ -31,9 +31,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.howabout.API.KakaoAPIClient;
 import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.Search.CategoryResult;
@@ -221,10 +223,11 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                 mapView.removeAllPolylines();
                 mapView.removeAllPOIItems();
                 searchKeyword(keyword);
-            } else {
-                searchAdapter.clear();
-                searchAdapter.notifyDataSetChanged();
             }
+//            else {
+//                searchAdapter.clear();
+//                searchAdapter.notifyDataSetChanged();
+//            }
         }
 
         @Override
@@ -657,6 +660,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                     if (CODE_2nd && !CODE_3rd) { //식당을 먼저 선택한 경우
                         Document rest_document = (Document) mapPOIItem.getUserObject(); //클릭 마커 Dcument Object 가져오기
                         saveCourse_data.put("rest", rest_document); // 식당 정보 Map에 저장
+                        saveMyCourse_data.put("r_id", rest_document.getId());
                         mapView.removeAllPOIItems(); //맵 마커 초기화
                         draw_marker("선택한 위치", first_marker_location.get("x"), first_marker_location.get("y"), R.drawable.location_blue); //처음 선택한 위치 마커 찍기
                         draw_marker(rest_document.getPlaceName(), Double.parseDouble(rest_document.getX()), Double.parseDouble(rest_document.getY()), R.drawable.location_rest_blue); //먼저 선택한 식당 마커 찍기
@@ -666,6 +670,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                     } else if (!CODE_2nd && CODE_3rd) { //카페를 먼저 선택한 경우
                         Document cafe_document = (Document) mapPOIItem.getUserObject(); //클릭 마커 Document Object 가져오기
                         saveCourse_data.put("cafe", cafe_document); //카페 정보 Map에 저장
+                        saveMyCourse_data.put("c_id",cafe_document.getId());
                         mapView.removeAllPOIItems(); //맵 마커 초기화
                         draw_marker("선택한 위치", first_marker_location.get("x"), first_marker_location.get("y"), R.drawable.location_blue); //처음 선택한 위치 마커 찍기
                         draw_marker(cafe_document.getPlaceName(), Double.parseDouble(cafe_document.getX()), Double.parseDouble(cafe_document.getY()), R.drawable.location_cafe_blue); //먼저 선택한 카페 마커 찍기
@@ -781,36 +786,84 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                 public void onClick(View view) {
 //                    dialog_2st.cancel();
                     Document marker_document = (Document) mapPOIItem.getUserObject();
-                    Log.i("leehj", "가게 정보 보기 marker document: " + marker_document.toString()); //@@@
+//                    Log.i("leehj", "가게 정보 보기 marker document: " + marker_document.toString()); //@@@
 
                     //서버 필요 데이터
                     getLocationInfo_data = new HashMap<>();
-                    getLocationInfo_data.put("place_name", marker_document.getPlaceName());
+//                    getLocationInfo_data.put("place_name", marker_document.getPlaceName());
                     getLocationInfo_data.put("place_url", marker_document.getPlaceUrl());
-                    getLocationInfo_data.put("place_id", marker_document.getId());
+//                    getLocationInfo_data.put("place_id", marker_document.getId());
 
                     Log.i("leehj", "가게 정보 보기 Map data"); //@@@
-                    Log.i("leehj", "가게 정보 보기 place_name: " + getLocationInfo_data.get("place_name")); //@@@
+//                    Log.i("leehj", "가게 정보 보기 place_name: " + getLocationInfo_data.get("place_name")); //@@@
                     Log.i("leehj", "가게 정보 보기 place_url: " + getLocationInfo_data.get("place_url")); //@@@
-                    Log.i("leehj", "가게 정보 보기 place_id: " + getLocationInfo_data.get("place_id")); //@@@
+//                    Log.i("leehj", "가게 정보 보기 place_id: " + getLocationInfo_data.get("place_id")); //@@@
 
-                    Dialog storeInfo_dialog = new Dialog(FindActivity.this);
-                    storeInfo_dialog.setContentView(R.layout.store_info);
-                    storeInfo_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-                    //창닫기 버튼 클릭 이벤트
-                    ImageButton cancel = (ImageButton) storeInfo_dialog.findViewById(R.id.storeInfo_cancel);
-                    cancel.setOnClickListener(new View.OnClickListener() {
+                    //서버에서 정보 받아오기
+                    Call<Map<String, String>> getLocationInfo = RetrofitClient.getApiService().getLocationInfo(getLocationInfo_data);
+                    getLocationInfo.enqueue(new Callback<Map<String, String>>() {
                         @Override
-                        public void onClick(View view) {
-                            storeInfo_dialog.dismiss();
+                        public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
+                            Map<String, String> result = response.body();
+                            Log.e("leehj", "가게 정보 Map data: "+result.toString());
+
+                            //store info dialog
+                            Dialog storeInfo_dialog = new Dialog(FindActivity.this);
+                            storeInfo_dialog.setContentView(R.layout.store_info);
+                            storeInfo_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                            //data
+                            String url = "http:"+result.get("imgUrl"); //response data img Url 가져오기
+                            Log.e("leehj", "img url : "+url);
+                            String review1 = result.get("review_1");
+                            String review2 = result.get("review_2");
+                            String review3 = result.get("review_3");
+                            String storeTime = result.get("storeTime");
+                            String starpoint = result.get("startpoint");
+
+                            ImageView img = (ImageView)storeInfo_dialog.findViewById(R.id.storeInfo_img);
+                            Glide.with(storeInfo_dialog.getContext()).load(url).into(img);
+
+
+                            //창닫기 버튼 클릭 이벤트
+                            ImageButton cancel = (ImageButton) storeInfo_dialog.findViewById(R.id.storeInfo_cancel);
+                            cancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    storeInfo_dialog.dismiss();
+                                }
+                            });
+
+                            //서버에서 받아온 정보 세팅
+                            TextView place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
+                            //...
+                            storeInfo_dialog.show();
+                        }
+
+                        @Override
+                        public void onFailure(Call<Map<String, String>> call, Throwable t) {
+
                         }
                     });
 
-                    //서버에서 받아온 정보 세팅
-                    TextView place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
-                    //...
-                    storeInfo_dialog.show();
+//                    //store info dialog
+//                    Dialog storeInfo_dialog = new Dialog(FindActivity.this);
+//                    storeInfo_dialog.setContentView(R.layout.store_info);
+//                    storeInfo_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//                    //창닫기 버튼 클릭 이벤트
+//                    ImageButton cancel = (ImageButton) storeInfo_dialog.findViewById(R.id.storeInfo_cancel);
+//                    cancel.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            storeInfo_dialog.dismiss();
+//                        }
+//                    });
+//
+//                    //서버에서 받아온 정보 세팅
+//                    TextView place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
+//                    //...
+//                    storeInfo_dialog.show();
                 }
             });
             dialog_2st.show();
@@ -928,6 +981,8 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
             saveMyCourse_data.put("u_id", "leehj"); //공유 프레퍼런스에서 가져오는걸로 수정
             //r_id, c_id 코스 저장 후 응담값으로 저장. 758, 759
             Log.e("leehj", "내 코스 저장 버튼 클릭");
+            Log.e("leehj", "식당 아이디: "+saveMyCourse_data.get("r_id"));
+            Log.e("leehj", "카페 아이디: "+saveMyCourse_data.get("c_id"));
 
             Call<Integer> save_myCourse = RetrofitClient.getApiService().saveMyCourse(saveMyCourse_data);
             save_myCourse.enqueue(new Callback<Integer>() {

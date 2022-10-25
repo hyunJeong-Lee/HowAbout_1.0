@@ -43,6 +43,7 @@ public interface RetrofitAPIService {
 
     @POST("/findCourse/rest") //식당 리스트
     Call<ArrayList<CategoryResult>> rest(@Body ArrayList<JSONObject> arrayList);
+
     @POST("/findCourse/cafe") //카페 리스트
     Call<ArrayList<CategoryResult>> cafe(@Body ArrayList<JSONObject> arrayList);
 
@@ -53,7 +54,7 @@ public interface RetrofitAPIService {
     Call<Integer> saveMyCourse(@Body Map saveMyCourse_data);
 
     @POST("/findCourse/getLocationInfo") //가게 정보
-    Call<ArrayList<ArrayList<String>>> getLocationInfo(Map place_info); //반환값 map으로 변경
+    Call<Map<String, String>> getLocationInfo(@Body Map place_info); //반환값 map으로 변경
 
 
     //MyPage................................................................
