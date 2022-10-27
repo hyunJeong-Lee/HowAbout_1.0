@@ -9,8 +9,6 @@
     tools:ignore="ExtraText">
 
 
-    //made by 동글오빠
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="200dp"
@@ -43,7 +41,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed_loid"
+            android:id="@+id/login_et_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="1"
@@ -68,7 +66,7 @@
         app:layout_constraintVertical_bias="0.51">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/ed_lopw"
+            android:id="@+id/login_et_pw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
@@ -78,7 +76,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <CheckBox
-        android:id="@+id/autologin"
+        android:id="@+id/login_check_autologin"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="자동 로그인"
@@ -92,13 +90,13 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn_lologin"
+        android:id="@+id/login_btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="#ff5757"
         android:text="로그인"
-        app:layout_constraintBottom_toTopOf="@+id/btn_registin"
+        app:layout_constraintBottom_toTopOf="@+id/login_btn_registin"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,7 +104,7 @@
         app:layout_constraintVertical_bias="0.986" />
 
     <Button
-        android:id="@+id/btn_registin"
+        android:id="@+id/login_btn_registin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -122,7 +120,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="30dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -138,6 +136,7 @@
             tools:layout_editor_absoluteX="78dp" />
 
         <TextView
+            android:id="@+id/login_findIDPW"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"

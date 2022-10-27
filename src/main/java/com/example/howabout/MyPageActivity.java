@@ -20,14 +20,14 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.howabout.API.RetrofitClient;
-import com.example.howabout.Vo.UserVo;
+import com.example.howabout.Vo.UserDTO;
+import com.example.howabout.functions.HowAboutThere;
 
 
 import org.json.simple.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,18 +35,20 @@ import retrofit2.Response;
 
 public class MyPageActivity extends AppCompatActivity implements Serializable {
 
-    DrawerLayout drawerLayout;
-    View drawerView;
+    HowAboutThere FUNC = new HowAboutThere();
+
     EditText myNick;
     EditText myId;
     EditText myBirth;
     EditText myGender;
-    UserVo user;
+    UserDTO user;
     Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_page);
+
+        FUNC.sideBar(MyPageActivity.this);
 
         SharedPreferences appData = getSharedPreferences("UserInfo", Activity.MODE_PRIVATE);
         Log.i("leehj", "appdata: "+appData.getString("u_id", null));
@@ -57,71 +59,16 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
         myBirth = findViewById(R.id.Et_birth);
         myGender = findViewById(R.id.Et_gender);
 
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawerView = findViewById(R.id.drawer);
-        ImageButton btn_open = findViewById(R.id.btn_open);
-        btn_open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(drawerView);
-            }
-        });
-
-        drawerLayout.setDrawerListener(listener);
-        drawerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                return true;
-            }
-        });
-
-        Button btn_homebar = findViewById(R.id.btn_homebar);
-        btn_homebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intenth=new Intent(MyPageActivity.this,MainActivity.class);
-                startActivity(intenth);
-            }
-        });
-        Button btn_courcebar=findViewById(R.id.btn_courcebar);
-        btn_courcebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intentc=new Intent(MyPageActivity.this,FindActivity.class);
-                startActivity(intentc);
-            }
-        });
-
-        Button btn_mypagebar = findViewById(R.id.btn_mypagebar);
-        btn_mypagebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-            }
-        });
-        Button btn_mycourcebar = findViewById(R.id.btn_mycourcebar);
-        btn_mycourcebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intentmc=new Intent(MyPageActivity.this,MyCourseActivity.class);
-                startActivity(intentmc);
-            }
-        });
         //~~~~~~~~~~ 마이페이지 정보 가지고 오기 START ~~~~~~~~~~~~~~~~~~~~~~
         JSONObject row = new JSONObject();
         row.put("u_id", appData.getString("u_id", "unknown"));
         ArrayList<JSONObject> ajo= new ArrayList<>();
         ajo.add(row);
         Log.i("leehj","Test :: : :"+ ajo.get(0).get("u_id"));
-        Call<UserVo> mydata = RetrofitClient.getApiService().myDataUp(ajo);
-        mydata.enqueue(new Callback<UserVo>() {
+        Call<UserDTO> mydata = RetrofitClient.getApiService().myDataUp(ajo);
+        mydata.enqueue(new Callback<UserDTO>() {
             @Override
-            public void onResponse(Call<UserVo> call, Response<UserVo> response) {
+            public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
                 user = response.body();
                 Log.e("leehj", "update response(바뀐 비밀번호): "+user.getU_nick());
                 myNick.setText(user.getU_nick());
@@ -134,7 +81,7 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
                 }
             }
             @Override
-            public void onFailure(Call<UserVo> call, Throwable t) {
+            public void onFailure(Call<UserDTO> call, Throwable t) {
                 Log.e("leehj","post response 실패: "+t);
             }
         });
@@ -247,28 +194,6 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
         });
         //~~~~~~~~~~~~~~~~~~~~~ 정보수정 page 누를시 Activity 이동  END ~~~~~~~~~~~~~~~~~~~~~~~~/
     }
-
-    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
-        @Override
-        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-        }
-
-        @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {
-
-        }
-    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

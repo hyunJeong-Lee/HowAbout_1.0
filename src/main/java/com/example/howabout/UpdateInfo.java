@@ -1,16 +1,13 @@
 package com.example.howabout;
 
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,13 +20,11 @@ import android.widget.Toast;
 
 
 import com.example.howabout.API.RetrofitClient;
-import com.example.howabout.MyPageActivity;
 
-import com.example.howabout.Vo.UserVo;
-import com.example.howabout.function.UserFunction;
+import com.example.howabout.Vo.UserDTO;
+import com.example.howabout.functions.User;
 
 
-import org.json.JSONException;
 import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
@@ -48,8 +43,8 @@ public class UpdateInfo extends AppCompatActivity {
     Button check, back;
     int gender;
     int CODE_check_pw;
-    UserVo myInfo = null;
-    UserFunction userFunc = new UserFunction();
+    UserDTO myInfo = null;
+    User userFunc = new User();
     Intent intent;
 
 
@@ -59,7 +54,7 @@ public class UpdateInfo extends AppCompatActivity {
         setContentView(R.layout.update_info);
         Log.e("choi", "TESTTTESTTESTTESTTESTTESTTESTTESTT");
         intent = getIntent();
-        myInfo = (UserVo) intent.getSerializableExtra("myInfo");
+        myInfo = (UserDTO) intent.getSerializableExtra("myInfo");
 
         //닉네임
         nick = (EditText)findViewById(R.id.update_etNick);
@@ -174,7 +169,7 @@ public class UpdateInfo extends AppCompatActivity {
             String birth_str = birth.getText().toString();
 
             if(CODE_check_pw == 1){ //재확인 비밀번호 일치
-                UserVo update_user = new UserVo(nick_str, id_str, pw_str, birth_str, gender);
+                UserDTO update_user = new UserDTO(nick_str, id_str, pw_str, birth_str, gender);
                 Log.i("leehj", update_user.toString());
 
                 //비밀번호 입력창
@@ -212,11 +207,11 @@ public class UpdateInfo extends AppCompatActivity {
                                 Log.e("leehj", "응답값: "+result);
                                 if(result == 1){
                                     Log.i("leehj", "user: "+update_user.toString());
-                                    Call<UserVo> func = RetrofitClient.getApiService().updateUser(update_user);
-                                    func.enqueue(new Callback<UserVo>() {
+                                    Call<UserDTO> func = RetrofitClient.getApiService().updateUser(update_user);
+                                    func.enqueue(new Callback<UserDTO>() {
                                         @Override
-                                        public void onResponse(Call<UserVo> call, Response<UserVo> response) {
-                                            UserVo user = response.body();
+                                        public void onResponse(Call<UserDTO> call, Response<UserDTO> response) {
+                                            UserDTO user = response.body();
                                             Log.e("leehj", "update response(바뀐 비밀번호): "+user.getU_pw());
                                             finish();
                                             intent = new Intent(UpdateInfo.this, MyPageActivity.class);
@@ -227,7 +222,7 @@ public class UpdateInfo extends AppCompatActivity {
                                         }
 
                                         @Override
-                                        public void onFailure(Call<UserVo> call, Throwable t) {
+                                        public void onFailure(Call<UserDTO> call, Throwable t) {
                                             Log.e("leehj","post response 실패: "+t);
                                         }
                                     });

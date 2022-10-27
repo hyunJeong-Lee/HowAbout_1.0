@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class UserVo implements Serializable {
+public class UserDTO implements Serializable {
 
-    public UserVo(String u_nick, String u_id, String u_pw, String birth, Integer gender) {
+    public UserDTO(String u_nick, String u_id, String u_pw, String birth, Integer gender) {
         this.u_nick = u_nick;
         this.u_id = u_id;
         this.u_pw = u_pw;
         this.birth = birth;
         this.gender = gender;
     }
-    public UserVo(){
+    public UserDTO(){
     }
 
     @SerializedName("u_nick")

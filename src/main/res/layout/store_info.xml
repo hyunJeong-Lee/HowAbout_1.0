@@ -18,8 +18,10 @@
             <ImageView
                 android:id="@+id/storeInfo_img"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/rabbit_icon" />
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/rabbit_icon"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/storeInfo_cancel"

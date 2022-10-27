@@ -17,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.howabout.functions.HowAboutThere;
+
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapPolyline;
@@ -28,8 +30,7 @@ import org.json.simple.parser.ParseException;
 
 public class CourseInfoActivity extends AppCompatActivity {
 
-    DrawerLayout drawerLayout;
-    View drawerView;
+   HowAboutThere FUNC = new HowAboutThere();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -37,8 +38,7 @@ public class CourseInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.course_info);
 
-        drawerLayout = findViewById(R.id.drawer_layout);
-        drawerView = findViewById(R.id.drawer);
+        FUNC.sideBar(CourseInfoActivity.this);
 
         //Mapview 생성
         MapView mapView = new MapView(this);
@@ -46,61 +46,7 @@ public class CourseInfoActivity extends AppCompatActivity {
         LinearLayout mapViewContainer = findViewById(R.id.map_mycourse);
         //layout에 mapview 추가
         mapViewContainer.addView(mapView);
-/////////////////// drawerLayout
-        ImageButton btn_open = findViewById(R.id.btn_open);
-        btn_open.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(drawerView);
-            }
-        });
 
-        drawerLayout.setDrawerListener(listener);
-        drawerView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                return true;
-            }
-        });
-
-        Button btn_homebar = findViewById(R.id.btn_homebar);
-        btn_homebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intenth = new Intent(CourseInfoActivity.this, MainActivity.class);
-                startActivity(intenth);
-            }
-        });
-        Button btn_courcebar = findViewById(R.id.btn_courcebar);
-        btn_courcebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intentc = new Intent(CourseInfoActivity.this, FindActivity.class);
-                startActivity(intentc);
-            }
-        });
-
-        Button btn_mypagebar = findViewById(R.id.btn_mypagebar);
-        btn_mypagebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intentmp = new Intent(CourseInfoActivity.this, MyPageActivity.class);
-                startActivity(intentmp);
-            }
-        });
-        Button btn_mycourcebar = findViewById(R.id.btn_mycourcebar);
-        btn_mycourcebar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.closeDrawers();
-                Intent intentmc = new Intent(CourseInfoActivity.this, MyCourseActivity.class);
-                startActivity(intentmc);
-            }
-        });
         ///////////////////drawlayout end
         //popular에서 보낸 intent 받기
         Intent couseintent = getIntent();
@@ -182,26 +128,4 @@ public class CourseInfoActivity extends AppCompatActivity {
         mapView.addPOIItem(marker);
         mapView.fitMapViewAreaToShowAllPOIItems();
     }
-
-    DrawerLayout.DrawerListener listener = new DrawerLayout.DrawerListener() {
-        @Override
-        public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
-        }
-
-        @Override
-        public void onDrawerOpened(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerClosed(@NonNull View drawerView) {
-
-        }
-
-        @Override
-        public void onDrawerStateChanged(int newState) {
-
-        }
-    };
 }

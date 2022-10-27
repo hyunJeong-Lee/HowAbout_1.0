@@ -11,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,9 +31,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +46,7 @@ import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.Search.CategoryResult;
 import com.example.howabout.Search.Document;
 import com.example.howabout.Search.SearchAdapter;
+import com.example.howabout.functions.HowAboutThere;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import net.daum.mf.map.api.CalloutBalloonAdapter;
@@ -66,6 +72,10 @@ import retrofit2.Response;
 
 public class FindActivity extends AppCompatActivity implements MapView.CurrentLocationEventListener, MapView.MapViewEventListener, MapView.POIItemEventListener {
 
+    SharedPreferences sharedPreferences;
+
+    HowAboutThere FUNC = new HowAboutThere();
+
     Map<String, Double> first_marker_location; //첫번째 마커 좌표 저장
     Map<String, Document> saveCourse_data = new HashMap<>(); //마커 클릭 시, 마커에 저장된 document 저장 {"rest", "cafe"}
     Map<String, String> getLocationInfo_data; //가게 정보 보기 클릭 시, 서버에 보낼 데이터 저장 {place_name, place_url, place_id}
@@ -80,16 +90,17 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     EditText ed_search; //검색어 입력받는 Edit Text
 
     //Drawer Layout Menu
-    DrawerLayout drawerLayout;
-    View drawerView;
-    Intent intent;
+//    DrawerLayout drawerLayout;
+//    View drawerView;
+//    Intent intent;
 
     //map, marker
     private MapView mapView;
     MapPOIItem marker; //기본 마커. (위치 검색, 현재위치)
     MapPOIItem custom_marker; //리스트로 받아온 식당, 카페 마커.
     MapPolyline polyline; //직선 연결
-    ImageButton btn_mycourse; //내코스 저장 버튼
+    //ImageButton btn_mycourse; //내코스 저장 버튼
+    Switch aSwitch; //내코스 저장 스위치
 
     //FloatingActionButton, 애니메이션
     private Animation fab_open, fab_close;
@@ -140,6 +151,8 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find);
 
+        FUNC.sideBar(FindActivity.this);
+
         //위치검색.
         rl_search = (RecyclerView) findViewById(R.id.rl_search);
         rl_search.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
@@ -158,19 +171,19 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         fab_currentLoca.setOnClickListener(click_fab);
         fab2.setOnClickListener(click_fab);
 
-        //DrawerLayout Menu
-        ImageButton btn_open = findViewById(R.id.btn_open);
-        btn_open.setOnClickListener(click_Drawer);
-
-        //drawer layout menu buttons
-        Button btn_homebar = findViewById(R.id.btn_homebar);
-        btn_homebar.setOnClickListener(click_DrawerMenu);
-        Button btn_courcebar = findViewById(R.id.btn_courcebar);
-        btn_courcebar.setOnClickListener(click_DrawerMenu);
-        Button btn_mypagebar = findViewById(R.id.btn_mypagebar);
-        btn_mypagebar.setOnClickListener(click_DrawerMenu);
-        Button btn_mycourcebar = findViewById(R.id.btn_mycourcebar);
-        btn_mycourcebar.setOnClickListener(click_DrawerMenu);
+//        //DrawerLayout Menu
+//        ImageButton btn_open = findViewById(R.id.btn_open);
+//        btn_open.setOnClickListener(click_Drawer);
+//
+//        //drawer layout menu buttons
+//        Button btn_homebar = findViewById(R.id.btn_homebar);
+//        btn_homebar.setOnClickListener(click_DrawerMenu);
+//        Button btn_courcebar = findViewById(R.id.btn_courcebar);
+//        btn_courcebar.setOnClickListener(click_DrawerMenu);
+//        Button btn_mypagebar = findViewById(R.id.btn_mypagebar);
+//        btn_mypagebar.setOnClickListener(click_DrawerMenu);
+//        Button btn_mycourcebar = findViewById(R.id.btn_mycourcebar);
+//        btn_mycourcebar.setOnClickListener(click_DrawerMenu);
 
         //mapview
         mapView = findViewById(R.id.map_view);
@@ -181,8 +194,11 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         mapView.setCalloutBalloonAdapter(new CustomCalloutBalloonAdapter());
 
         //save mycourse
-        btn_mycourse = findViewById(R.id.find_lcy_btn);
-        btn_mycourse.setOnClickListener(save_mycourse);
+//        btn_mycourse = findViewById(R.id.find_lcy_btn);
+//        btn_mycourse.setOnClickListener(save_mycourse);
+
+        aSwitch = (Switch) findViewById(R.id.find_switch);
+        aSwitch.setOnCheckedChangeListener(check_switch);
 
 //        //SeekBar 반경
 //        SeekBar seekBar = findViewById(R.id.seekbar);
@@ -261,7 +277,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                         @Override
                         public void onItemClicked(int position, View view) {
                             rl_search.setVisibility(View.GONE);
-                            btn_mycourse.setVisibility(View.GONE);
+                            aSwitch.setVisibility(View.GONE);
                             inputMethodManager.hideSoftInputFromWindow(ed_search.getWindowToken(), 0); //hide keyboard
                             Document document = result.get(position);
                             MapMarker(document.getPlaceName(), Double.parseDouble(document.getX()), Double.parseDouble(document.getY()));
@@ -269,6 +285,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                     });
                 }
             }
+
             @Override
             public void onFailure(Call<CategoryResult> call, Throwable t) {
 
@@ -352,48 +369,48 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     };
 
     //drawer Layout open button click event
-    View.OnClickListener click_Drawer = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            drawerLayout = findViewById(R.id.drawer_layout);
-            drawerView = findViewById(R.id.drawer);
-            drawerLayout.openDrawer(drawerView);
-        }
-    };
+//    View.OnClickListener click_Drawer = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            drawerLayout = findViewById(R.id.drawer_layout);
+//            drawerView = findViewById(R.id.drawer);
+//            drawerLayout.openDrawer(drawerView);
+//        }
+//    };
 
     //drawer Layout menu click event
-    View.OnClickListener click_DrawerMenu = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            int id = view.getId();
-            switch (id) {
-                case R.id.btn_homebar:
-                    drawerLayout.closeDrawers();
-                    finish();
-                    intent = new Intent(FindActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.btn_courcebar:
-                    drawerLayout.closeDrawers();
-                    finish();
-                    intent = getIntent();
-                    startActivity(intent);
-                    break;
-                case R.id.btn_mypagebar:
-                    drawerLayout.closeDrawers();
-                    finish();
-                    intent = new Intent(FindActivity.this, MyPageActivity.class);
-                    startActivity(intent);
-                    break;
-                case R.id.btn_mycourcebar:
-                    drawerLayout.closeDrawers();
-                    finish();
-                    intent = new Intent(FindActivity.this, MyCourseActivity.class);
-                    startActivity(intent);
-                    break;
-            }
-        }
-    };
+//    View.OnClickListener click_DrawerMenu = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            int id = view.getId();
+//            switch (id) {
+//                case R.id.btn_homebar:
+//                    drawerLayout.closeDrawers();
+//                    finish();
+//                    intent = new Intent(FindActivity.this, MainActivity.class);
+//                    startActivity(intent);
+//                    break;
+//                case R.id.btn_courcebar:
+//                    drawerLayout.closeDrawers();
+////                    intent = getIntent();
+////                    finish();
+////                    startActivity(intent);
+//                    break;
+//                case R.id.btn_mypagebar:
+//                    drawerLayout.closeDrawers();
+//                    finish();
+//                    intent = new Intent(FindActivity.this, MyPageActivity.class);
+//                    startActivity(intent);
+//                    break;
+//                case R.id.btn_mycourcebar:
+//                    drawerLayout.closeDrawers();
+//                    finish();
+//                    intent = new Intent(FindActivity.this, MyCourseActivity.class);
+//                    startActivity(intent);
+//                    break;
+//            }
+//        }
+//    };
 
     //선택된 위치 마커찍기
     public void draw_marker(String MarkerName, double x, double y, int image) {
@@ -410,7 +427,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         marker.setCustomImageResourceId(image); // 마커 이미지.
         marker.setCustomImageAutoscale(false); // hdpi, xhdpi 등 안드로이드 플랫폼의 스케일을 사용할 경우 지도 라이브러리의 스케일 기능을 꺼줌.
         marker.setCustomImageAnchor(0.5f, 1.0f); // 마커 이미지중 기준이 되는 위치(앵커포인트) 지정 - 마커 이미지 좌측 상단 기준 x(0.0f ~ 1.0f), y(0.0f ~ 1.0f) 값.
-        marker.setShowCalloutBalloonOnTouch(false);
+        marker.setShowCalloutBalloonOnTouch(true);
         mapView.addPOIItem(marker);
     }
 
@@ -482,7 +499,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 
         mapView.removeAllPOIItems();
         mapView.removeAllPolylines();
-        btn_mycourse.setVisibility(View.GONE);
+        aSwitch.setVisibility(View.GONE);
         MapMarker("현재위치", mCurrentLng, mCurrentLat);
 
         if (!isTrackingMode) {
@@ -564,25 +581,32 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     }
 
     @Override
-    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewCenterPointMoved(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
-    public void onMapViewZoomLevelChanged(MapView mapView, int i) { }
+    public void onMapViewZoomLevelChanged(MapView mapView, int i) {
+    }
 
     @Override
-    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewSingleTapped(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
-    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewDoubleTapped(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
-    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewLongPressed(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
-    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewDragStarted(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
-    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) { }
+    public void onMapViewDragEnded(MapView mapView, MapPoint mapPoint) {
+    }
 
     @Override
     public void onMapViewMoveFinished(MapView mapView, MapPoint mapPoint) {
@@ -631,6 +655,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                 @Override
                 public void onClick(View view) {
                     dialog.cancel();
+                    mapView.removeAllPOIItems();
                     draw_marker("선택한 위치", first_marker_location.get("x"), first_marker_location.get("y"), R.drawable.location_blue);
                     SearchRestaurant(String.valueOf(lon), String.valueOf(lat), String.valueOf(radius));
                 }
@@ -642,6 +667,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                 @Override
                 public void onClick(View view) {
                     dialog.cancel();
+                    mapView.removeAllPOIItems();
                     draw_marker("선택한 위치", first_marker_location.get("x"), first_marker_location.get("y"), R.drawable.location_blue);
                     SearchCafe(String.valueOf(lon), String.valueOf(lat), String.valueOf(radius));
                 }
@@ -670,7 +696,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                     } else if (!CODE_2nd && CODE_3rd) { //카페를 먼저 선택한 경우
                         Document cafe_document = (Document) mapPOIItem.getUserObject(); //클릭 마커 Document Object 가져오기
                         saveCourse_data.put("cafe", cafe_document); //카페 정보 Map에 저장
-                        saveMyCourse_data.put("c_id",cafe_document.getId());
+                        saveMyCourse_data.put("c_id", cafe_document.getId());
                         mapView.removeAllPOIItems(); //맵 마커 초기화
                         draw_marker("선택한 위치", first_marker_location.get("x"), first_marker_location.get("y"), R.drawable.location_blue); //처음 선택한 위치 마커 찍기
                         draw_marker(cafe_document.getPlaceName(), Double.parseDouble(cafe_document.getX()), Double.parseDouble(cafe_document.getY()), R.drawable.location_cafe_blue); //먼저 선택한 카페 마커 찍기
@@ -714,8 +740,9 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 
                         //맵에 연결한 직선 표시
                         mapView.addPolyline(polyline);
-                        btn_mycourse.setClickable(true);
-                        btn_mycourse.setVisibility(View.VISIBLE);
+                        aSwitch.setChecked(false);
+                        aSwitch.setClickable(true);
+                        aSwitch.setVisibility(View.VISIBLE);
 
                         //직선 연결 옵션
                         MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
@@ -724,35 +751,39 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                         mapView.moveCamera(CameraUpdateFactory.newMapPointBounds(mapPointBounds, padding));
 
                         //서버로 코스 데이터 전송. 1. u_id list에 담기 2. rest api로 데이터 받아서 저장 *****
-                        result_list = new ArrayList<>(3);
+                        result_list = new ArrayList<>(2);
 
                         //u_id
                         //***************일단 u_id 임의로 json object로 담고, 나중에 공유 프레퍼런스 적용하면 공유 프레퍼런스에서 가져오는 걸로
                         //*************** 그럼 먼저 공유 프레퍼런스에 u_id가 있는지 부터 검사하고 있으면 데이터 전송하는 걸로
-                        JSONObject jsonObject = new JSONObject();
-                        jsonObject.put("u_id", "leehj");
-                        Log.i("leehj", "생성한 u_id jsonObject : " + jsonObject.toJSONString());
-                        result_list.add(0, jsonObject);
+//                        JSONObject jsonObject = new JSONObject();
+//                        jsonObject.put("u_id", "leehj");
+//                        Log.i("leehj", "생성한 u_id jsonObject : " + jsonObject.toJSONString());
+//                        result_list.add(0, jsonObject);
 
                         rest = saveCourse_data.get("rest"); //데이터 정상적으로 가는지 확인할 것
                         cafe = saveCourse_data.get("cafe");
 
-                        result_list.add(1, rest);
-                        result_list.add(2, cafe);
+                        result_list.add(0, rest);
+                        result_list.add(1, cafe);
 
-                        Log.e("leehj", "result list rest index 1: " + result_list.get(1).toString()); //@@@
-                        Log.e("leehj", "result list cafe index 2: " + result_list.get(2).toString()); //@@@
+                        Log.e("leehj", "result list rest index 1: " + result_list.get(0).toString()); //@@@
+                        Log.e("leehj", "result list cafe index 2: " + result_list.get(1).toString()); //@@@
                         //**************************************************************************
 
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 //서버로 데이터 요청 -- r_id, c_id
-                                Call<Map> saveCourse = RetrofitClient.getApiService().saveCourse(result_list);
+                                sharedPreferences = getSharedPreferences("USER", Activity.MODE_PRIVATE);
+                                String token = "Bearer "+sharedPreferences.getString("token", null);
+                                Log.i("leehj", "token: " + token);
+
+                                Call<Map> saveCourse = RetrofitClient.getApiService().saveCourse(result_list, token);
                                 saveCourse.enqueue(new Callback<Map>() {
                                     @Override
                                     public void onResponse(Call<Map> call, Response<Map> response) {
-                                        if(response.isSuccessful()) {
+                                        if (response.isSuccessful()) {
                                             new Handler().postDelayed(new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -765,7 +796,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 //                                                        saveMyCourse_data.put("c_id", result.get("c_id"));
 //                                                    }
                                                 }
-                                            }, 1000*4);
+                                            }, 1000 * 4);
                                         }
                                     }
 
@@ -805,7 +836,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                         @Override
                         public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                             Map<String, String> result = response.body();
-                            Log.e("leehj", "가게 정보 Map data: "+result.toString());
+                            Log.e("leehj", "가게 정보 Map data: " + result.toString());
 
                             //store info dialog
                             Dialog storeInfo_dialog = new Dialog(FindActivity.this);
@@ -813,16 +844,27 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             storeInfo_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                             //data
-                            String url = "http:"+result.get("imgUrl"); //response data img Url 가져오기
-                            Log.e("leehj", "img url : "+url);
+                            String placeName = marker_document.getPlaceName();
+                            String address = marker_document.getAddressName();
+                            String category = marker_document.getCategoryName();
+                            String phone = marker_document.getPhone();
+                            String store_url = marker_document.getPlaceUrl();
+
+                            String url = "http:" + result.get("imgUrl"); //response data img Url 가져오기
+                            Log.e("leehj", "img url : " + url);
                             String review1 = result.get("review_1");
                             String review2 = result.get("review_2");
                             String review3 = result.get("review_3");
                             String storeTime = result.get("storeTime");
                             String starpoint = result.get("startpoint");
 
-                            ImageView img = (ImageView)storeInfo_dialog.findViewById(R.id.storeInfo_img);
+                            Log.i("leehj", "marker document print : "+marker_document.toString());
+                            Log.i("leehj", "response print: "+result.toString());
+
+                            ImageView img = (ImageView) storeInfo_dialog.findViewById(R.id.storeInfo_img);
                             Glide.with(storeInfo_dialog.getContext()).load(url).into(img);
+
+                            TextView place_name = (TextView)storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
 
 
                             //창닫기 버튼 클릭 이벤트
@@ -835,7 +877,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             });
 
                             //서버에서 받아온 정보 세팅
-                            TextView place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
+                            TextView p_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
                             //...
                             storeInfo_dialog.show();
                         }
@@ -880,7 +922,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(mSearchLat, mSearchLng), true);
         mapView.removeAllPOIItems();
         mapView.removeAllPolylines();
-        btn_mycourse.setVisibility(View.GONE);
+        aSwitch.setVisibility(View.GONE);
         MapMarker("드래그한 장소", mSearchLng, mSearchLat);
     }
 
@@ -974,30 +1016,61 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     } //...SearchCafe()
 
     //Save myCourse button click event
-    View.OnClickListener save_mycourse = new View.OnClickListener() {
+//    View.OnClickListener save_mycourse = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            //서버 반환값 확인 후 반환값 저장해서 사용하던지 할 예정f
+//            saveMyCourse_data.put("u_id", "leehj"); //공유 프레퍼런스에서 가져오는걸로 수정
+//            //r_id, c_id 코스 저장 후 응담값으로 저장. 758, 759
+//            Log.e("leehj", "내 코스 저장 버튼 클릭");
+//            Log.e("leehj", "식당 아이디: "+saveMyCourse_data.get("r_id"));
+//            Log.e("leehj", "카페 아이디: "+saveMyCourse_data.get("c_id"));
+//
+//            Call<Integer> save_myCourse = RetrofitClient.getApiService().saveMyCourse(saveMyCourse_data);
+//            save_myCourse.enqueue(new Callback<Integer>() {
+//                @Override
+//                public void onResponse(Call<Integer> call, Response<Integer> response) {
+//                    Log.i("leehj", "성공 시 return value는 1: "+response.body());
+//                    Toast.makeText(FindActivity.this, "내 코스에 저장됐습니다.", Toast.LENGTH_SHORT).show();
+//                    view.setClickable(false);
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Integer> call, Throwable t) {
+//
+//                }
+//            });
+//        }
+//    };
+
+    //save myCourse event
+    Switch.OnCheckedChangeListener check_switch = new CompoundButton.OnCheckedChangeListener() {
         @Override
-        public void onClick(View view) {
-            //서버 반환값 확인 후 반환값 저장해서 사용하던지 할 예정f
-            saveMyCourse_data.put("u_id", "leehj"); //공유 프레퍼런스에서 가져오는걸로 수정
-            //r_id, c_id 코스 저장 후 응담값으로 저장. 758, 759
-            Log.e("leehj", "내 코스 저장 버튼 클릭");
-            Log.e("leehj", "식당 아이디: "+saveMyCourse_data.get("r_id"));
-            Log.e("leehj", "카페 아이디: "+saveMyCourse_data.get("c_id"));
+        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+            sharedPreferences = getSharedPreferences("USER", Activity.MODE_PRIVATE);
+            String  token = "Bearer "+sharedPreferences.getString("token", null);
+            Log.i("leehj", "token: " + token);
 
-            Call<Integer> save_myCourse = RetrofitClient.getApiService().saveMyCourse(saveMyCourse_data);
-            save_myCourse.enqueue(new Callback<Integer>() {
-                @Override
-                public void onResponse(Call<Integer> call, Response<Integer> response) {
-                    Log.i("leehj", "성공 시 return value는 1: "+response.body());
-                    Toast.makeText(FindActivity.this, "내 코스에 저장됐습니다.", Toast.LENGTH_SHORT).show();
-                    view.setClickable(false);
-                }
+            if (b) {
+                Log.e("leehj", "스위치 on 서버에 내코스 저장 해요!!");
+//                saveMyCourse_data.put("u_id", "leehj");
+                Call<Integer> save_myCourse = RetrofitClient.getApiService().saveMyCourse(saveMyCourse_data, token);
+                save_myCourse.enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        Log.i("leehj", "성공 시 return value는 1: " + response.body());
+                        Toast.makeText(FindActivity.this, "내 코스에 저장됐습니다.", Toast.LENGTH_SHORT).show();
+                        compoundButton.setClickable(false);
+                    }
 
-                @Override
-                public void onFailure(Call<Integer> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) {
 
-                }
-            });
+                    }
+                });
+            } else {
+                Log.e("leehj", "스위치 off!!! 서버에 내코스 삭제해요");
+            }
         }
     };
 }

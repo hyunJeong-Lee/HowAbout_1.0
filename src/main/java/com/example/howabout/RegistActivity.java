@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.Vo.IdVo;
 import com.example.howabout.Vo.NickNameVo;
-import com.example.howabout.Vo.UserVo;
+import com.example.howabout.Vo.UserDTO;
 
 import java.util.ArrayList;
 
@@ -338,7 +338,7 @@ public class RegistActivity extends AppCompatActivity {
                     if (click1 == click2 && click2 == click3 && click3 == checkBirth && click1 == 1) {
                         Log.i("subin", "로그인성공");
 
-                        UserVo inputuser = new UserVo(UserName, UserId, UserPw, Birth, gender);
+                        UserDTO inputuser = new UserDTO(UserName, UserId, UserPw, Birth, gender);
                         Call<Integer> all = RetrofitClient.getApiService().all(inputuser);
                         all.enqueue(new Callback<Integer>() {
                             @Override
