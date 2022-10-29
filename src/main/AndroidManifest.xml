@@ -22,9 +22,6 @@
             android:name=".UpdateInfo"
             android:exported="false" />
         <activity
-            android:name=".StoreInfoActivity"
-            android:exported="false" />
-        <activity
             android:name=".CourseInfoActivity"
             android:exported="false" />
         <activity

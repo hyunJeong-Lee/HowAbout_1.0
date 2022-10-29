@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.howabout.DTO.LoginDTO;
 import com.example.howabout.FindActivity;
 import com.example.howabout.MainActivity;
 import com.example.howabout.MyCourseActivity;
@@ -27,6 +29,13 @@ public class HowAboutThere {
     Intent intent;
     SharedPreferences sharedPreferences;
 
+    public void save_login_Data(SharedPreferences.Editor editor, LoginDTO loginDTO, boolean CODE_check_autoLogin){
+        editor.putString("token", loginDTO.getToken());
+        editor.putString("u_nick", loginDTO.getMsg());
+        editor.putBoolean("auto", CODE_check_autoLogin);
+        editor.commit();
+    }
+
     //intent 함수, startActivity
     public void activity_intent(Activity firstActivity, Class secondActivity) {
         Intent intent = new Intent(firstActivity, secondActivity);
@@ -40,9 +49,11 @@ public class HowAboutThere {
         Button btn_mypagebar = activity.findViewById(R.id.btn_mypagebar); //myPage tab
         Button btn_mycourcebar = activity.findViewById(R.id.btn_mycourcebar); //myCourse tab
         Button logout = activity.findViewById(R.id.logout); //logout tab
+        TextView side_hello = activity.findViewById(R.id.helloId);
 
         sharedPreferences = activity.getSharedPreferences("USER", Activity.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
+        String nickname = sharedPreferences.getString("u_nick", null);
 
         btn_open.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +62,11 @@ public class HowAboutThere {
                 View drawerView = activity.findViewById(R.id.drawer);
                 drawerLayout.openDrawer(drawerView);
 
-                Log.e("leehj", "activity : " + activity.getLocalClassName());
+                if(token == null){  side_hello.setText("로그인을 해주세요! 🙏"); }
+                else{ side_hello.setText(nickname+"님 환영합니다 🙌");}
+
+
+                    Log.e("leehj", "activity : " + activity.getLocalClassName());
 
                 //drawer layout menu buttons
                 Button btn_homebar = activity.findViewById(R.id.btn_homebar);
@@ -108,7 +123,6 @@ public class HowAboutThere {
                     }
                 });
 
-
 //                    logout.setVisibility(View.VISIBLE);
                 logout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -119,7 +133,7 @@ public class HowAboutThere {
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             editor.clear();
                             editor.commit();
-                            Log.i("leehj", sharedPreferences.getString("token", null));
+//                            Log.i("leehj", sharedPreferences.getString("token", null));
 
                             Toast.makeText(activity, "로그아웃 되었습니다. ", Toast.LENGTH_SHORT).show();
 
@@ -127,7 +141,7 @@ public class HowAboutThere {
                                 drawerLayout.closeDrawers();
                             } else {
                                 activity.finish();
-                                activity_intent(activity, TEST.class);
+                                activity_intent(activity, MainActivity.class);
                             }
                         }
                     }

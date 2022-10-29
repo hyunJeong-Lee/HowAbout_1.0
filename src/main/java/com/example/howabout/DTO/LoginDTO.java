@@ -1,4 +1,4 @@
-package com.example.howabout.Vo;
+package com.example.howabout.DTO;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

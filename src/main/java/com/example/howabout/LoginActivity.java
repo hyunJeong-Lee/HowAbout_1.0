@@ -16,9 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.howabout.API.RetrofitClient;
-import com.example.howabout.Vo.LoginDTO;
+import com.example.howabout.DTO.LoginDTO;
 import com.example.howabout.functions.HowAboutThere;
-import com.example.howabout.functions.SaveData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences; //로그인한 사용자 정보 저장
     Intent intent;
 
-    SaveData SAVEDATA = new SaveData();
     HowAboutThere FUNC = new HowAboutThere();
 
     boolean CODE_check_autoLogin = false; //자동 로그인 여부 체크 코드
@@ -55,6 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         //로그인 버튼 클릭
         btn_login = (Button) findViewById(R.id.login_btn_login);
         btn_login.setOnClickListener(click_loginBtn);
+
+        tv_findIDPW = (TextView) findViewById(R.id.login_findIDPW);
+        tv_findIDPW.setOnClickListener(click_findIDPW);
     }
 
     //auto login check
@@ -80,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.e("leehj", "LOGIN MAP DATA u_id : " + login_data.get("u_id")); //@@
             Log.e("leehj", "LOGIN MAP DATA u_pw : " + login_data.get("u_pw")); //@@
 
-            Call<LoginDTO> login = RetrofitClient.getApiService().login(login_data);
+            Call<LoginDTO> login = RetrofitClient.getApiService().signIn(login_data);
             login.enqueue(new Callback<LoginDTO>() {
                 @Override
                 public void onResponse(Call<LoginDTO> call, Response<LoginDTO> response) {
@@ -90,10 +91,10 @@ public class LoginActivity extends AppCompatActivity {
                         if (loginDTO.getSuccess() == 1) { //로그인이 성공한 경우
                             //공유 프레퍼런스에 정보 저장
                             Log.e("leehj", "RESPONSE LOGIN DTO : " + loginDTO.toString()); //@@
-                            SAVEDATA.save_login_Data(editor, loginDTO, CODE_check_autoLogin); //데이터 공유 프리퍼런스에 저장
+                            FUNC.save_login_Data(editor, loginDTO, CODE_check_autoLogin); //데이터 공유 프리퍼런스에 저장
                             Log.e("leehj", "공유 프레퍼런스 저장 성공: " + sharedPreferences.getString("token", null)); //@@
 
-                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
 
                             //finish(); //나중에 처리 Main에서 Login으로 넘어오는 거니까
                             FUNC.activity_intent(LoginActivity.this, MainActivity.class); //intent 처리
@@ -128,4 +129,12 @@ public class LoginActivity extends AppCompatActivity {
 
         return login_data;
     }
+
+    //아이디 찾기, 비밀번호 재설정
+    View.OnClickListener click_findIDPW = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 }

@@ -24,6 +24,5 @@ public class MyCourseActivity extends AppCompatActivity {
         setContentView(R.layout.my_course);
 
         FUNC.sideBar(MyCourseActivity.this);
-
     }
 }
