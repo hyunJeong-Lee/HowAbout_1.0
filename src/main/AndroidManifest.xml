@@ -19,6 +19,9 @@
             android:name=".TEST"
             android:exported="true" />
         <activity
+            android:name=".FindUserInfoActivity"
+            android:exported="true" />
+        <activity
             android:name=".UpdateInfo"
             android:exported="false" />
         <activity

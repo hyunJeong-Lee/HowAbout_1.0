@@ -12,6 +12,8 @@
         android:id="@+id/tv_balloon_placename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/godo_m"
+        android:textSize="15dp"
         android:drawableRight="@drawable/ic_baseline_chevron_right_24"
         android:text="천안역 " />
 

@@ -40,7 +40,9 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="15dp"
+                android:background="@drawable/round_btn"
                 android:backgroundTint="#FF5757"
+                android:fontFamily="@font/jalnan_main"
                 android:text="Login"
                 android:visibility="visible" />
 
@@ -72,28 +74,47 @@
             android:id="@+id/main_hello"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="안녕"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center"
+            android:fontFamily="@font/godo_m"
+            android:text="안녕" />
 
-
-        <FrameLayout
+        <ViewFlipper
+            android:id="@+id/viewFlipper"
             android:layout_width="match_parent"
             android:layout_height="200dp">
 
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/main_viewpager"
+            <ImageView
+                android:id="@+id/imageView1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:clipChildren="false"
-                android:clipToPadding="false" />
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/grape" />
 
-            <me.relex.circleindicator.CircleIndicator3
-                android:id="@+id/main_indicator"
+            <ImageView
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom" />
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/my_weather" />
 
-        </FrameLayout>
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/mcl" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/closet" />
+        </ViewFlipper>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,39 +127,53 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <ImageButton
-                    android:id="@+id/main_img_main1"
+                <!--                <ImageButton-->
+                <!--                    android:id="@+id/main_img_main1"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_marginTop="6dp"-->
+                <!--                    android:layout_marginRight="5dp"-->
+                <!--                    android:layout_marginBottom="6dp"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:background="@drawable/edge_circlemain"-->
+                <!--                    android:scaleType="centerCrop"-->
+                <!--                    android:src="@drawable/rabbit" />-->
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/main_animationView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="6dp"
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/rabbit" />
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/playing_rocket_animation" />
 
-                <android.widget.Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/main_btn_popular"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
                     android:backgroundTint="@color/white"
+                    android:fontFamily="@font/yang"
                     android:text="인기 코스"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textColor="@color/gray"
+                    android:textSize="25dp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -146,26 +181,35 @@
                     android:id="@+id/main_btn_find"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
                     android:backgroundTint="@color/white"
+                    android:fontFamily="@font/yang"
                     android:text="코스 찾기"
-                    android:textColor="#000"
-                    android:textSize="20dp" />
+                    android:textColor="@color/gray"
+                    android:textSize="25dp" />
 
-                <ImageButton
-                    android:id="@+id/main_img_main2"
+                <com.airbnb.lottie.LottieAnimationView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="6dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/rabbit" />
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/location_animation_red" />
+
+                <!--                <ImageButton-->
+                <!--                    android:id="@+id/main_img_main2"-->
+                <!--                    android:layout_width="0dp"-->
+                <!--                    android:layout_height="match_parent"-->
+                <!--                    android:layout_marginTop="6dp"-->
+                <!--                    android:layout_marginBottom="10dp"-->
+                <!--                    android:layout_weight="1"-->
+                <!--                    android:background="@drawable/edge_circlemain"-->
+                <!--                    android:scaleType="centerCrop"-->
+                <!--                    android:src="@drawable/rabbit" />-->
             </LinearLayout>
 
         </LinearLayout>

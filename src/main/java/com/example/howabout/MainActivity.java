@@ -17,10 +17,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.example.howabout.Fragment.FragMyAdapter;
 import com.example.howabout.functions.HowAboutThere;
@@ -39,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     TextView side_hello, main_hello;
 
     SharedPreferences sharedPreferences;
+
+    ViewFlipper viewFlipper;
 
     //login
 //    final static int REQUEST_CODE_START_INPUT = 1;
@@ -62,13 +67,12 @@ public class MainActivity extends AppCompatActivity {
         String nickname = sharedPreferences.getString("u_nick", null);
         Log.i("leehj", "main :: login nickname: "+nickname);
 
-//        img_main1 = findViewById(R.id.main_img_main1);
-//        img_main1.setClipToOutline(true);
-//
-//        img_main2 = findViewById(R.id.main_img_main2);
-//        img_main2.setClipToOutline(true);
-//
-//        helloId = findViewById(R.id.helloId);
+        viewFlipper = findViewById(R.id.viewFlipper);
+        Animation showIn = AnimationUtils.loadAnimation(getBaseContext(), android.R.anim.slide_in_left);
+        viewFlipper.setInAnimation(showIn);
+        viewFlipper.setOutAnimation(getBaseContext(), android.R.anim.slide_out_right);
+        viewFlipper.setFlipInterval(2000);
+        viewFlipper.startFlipping();
 
         btn_login = findViewById(R.id.main_btn_login);
         btn_mypage = findViewById(R.id.main_btn_mypage);
@@ -83,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             btn_login.setVisibility(View.GONE);
             btn_mypage.setVisibility(View.VISIBLE);
             btn_mycourse.setVisibility(View.VISIBLE);
+
             main_hello.setText(nickname+"님 환영합니다 🙌");
         }else{
             btn_login.setVisibility(View.VISIBLE);

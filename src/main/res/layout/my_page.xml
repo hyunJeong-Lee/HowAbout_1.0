@@ -37,6 +37,7 @@
                 android:text="마이페이지"
                 android:textColor="@color/white"
                 android:textSize="22dp"
+                android:fontFamily="@font/jalnan_main"
                 android:textStyle="bold" />
 
             <!--            <ImageView-->
@@ -85,7 +86,7 @@
                         android:textSize="16dp" />
 
                     <EditText
-                        android:id="@+id/Et_nick"
+                        android:id="@+id/mypage_et_nick"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:enabled="false"
@@ -110,7 +111,31 @@
                         android:textSize="16dp" />
 
                     <EditText
-                        android:id="@+id/Et_id"
+                        android:id="@+id/mypage_et_id"
+                        android:layout_width="200dp"
+                        android:layout_height="45dp"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:text="이메일"
+                        android:textSize="16dp" />
+
+                    <EditText
+                        android:id="@+id/mypage_et_email"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:enabled="false"
@@ -134,7 +159,7 @@
                         android:textSize="16dp" />
 
                     <EditText
-                        android:id="@+id/Et_gender"
+                        android:id="@+id/mypage_et_gender"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:enabled="false"
@@ -158,7 +183,7 @@
                         android:textSize="16dp" />
 
                     <EditText
-                        android:id="@+id/Et_birth"
+                        android:id="@+id/mypage_et_birth"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:enabled="false"
@@ -176,7 +201,7 @@
                     android:orientation="vertical">
 
                     <Button
-                        android:id="@+id/editInfo"
+                        android:id="@+id/mypage_btn_editInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -184,7 +209,7 @@
                         android:text="정보수정" />
 
                     <Button
-                        android:id="@+id/withdrawal"
+                        android:id="@+id/mypage_btn_withdrawal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

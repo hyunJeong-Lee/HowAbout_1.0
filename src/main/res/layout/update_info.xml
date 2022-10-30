@@ -25,7 +25,9 @@
                 android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:backgroundTint="#FF5757"
-                android:src="@drawable/ic_baseline_dehaze" />
+                android:src="@drawable/ic_baseline_dehaze"
+                android:visibility="invisible"
+                android:focusable="false"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -95,6 +97,31 @@
 
                     <EditText
                         android:id="@+id/update_etId"
+                        android:layout_width="200dp"
+                        android:layout_height="45dp"
+                        android:background="@drawable/edge_gray"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:textSize="18dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="45dp"
+                        android:gravity="center_vertical"
+                        android:text="이메일 "
+                        android:textSize="15dp" />
+
+                    <EditText
+                        android:id="@+id/update_etEmail"
                         android:layout_width="200dp"
                         android:layout_height="45dp"
                         android:background="@drawable/edge_gray"

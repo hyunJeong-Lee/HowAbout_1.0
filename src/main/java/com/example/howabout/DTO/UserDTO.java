@@ -7,13 +7,15 @@ import java.io.Serializable;
 
 public class UserDTO implements Serializable {
 
-    public UserDTO(String u_nick, String u_id, String u_pw, String birth, Integer gender) {
+    public UserDTO(String u_nick, String u_id, String u_pw, String birth, int gender, String u_email) {
         this.u_nick = u_nick;
         this.u_id = u_id;
         this.u_pw = u_pw;
         this.birth = birth;
         this.gender = gender;
+        this.u_email = u_email;
     }
+
     public UserDTO(){
     }
 
@@ -31,7 +33,10 @@ public class UserDTO implements Serializable {
     private String birth;
     @SerializedName("gender")
     @Expose
-    private Integer gender;
+    private int gender;
+    @SerializedName("u_email")
+    @Expose
+    private String u_email;
 
     public String getU_nick() {
         return u_nick;
@@ -65,22 +70,31 @@ public class UserDTO implements Serializable {
         this.birth = birth;
     }
 
-    public Integer getGender() {
+    public int getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public String getU_email() {
+        return u_email;
+    }
+
+    public void setU_email(String u_email) {
+        this.u_email = u_email;
     }
 
     @Override
     public String toString() {
-        return "UserVo{" +
+        return "UserDTO{" +
                 "u_nick='" + u_nick + '\'' +
                 ", u_id='" + u_id + '\'' +
                 ", u_pw='" + u_pw + '\'' +
                 ", birth='" + birth + '\'' +
                 ", gender=" + gender +
+                ", u_email='" + u_email + '\'' +
                 '}';
     }
 }

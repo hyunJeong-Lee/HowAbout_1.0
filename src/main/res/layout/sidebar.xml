@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer"
-    android:layout_width="240dp"
+    android:layout_width="260dp"
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:background="#99F3C5C5"
@@ -64,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/white"
-                android:drawableLeft="@drawable/ic_baseline_search_24"
+                android:drawableLeft="@drawable/ic_baseline_search_24_red"
                 android:gravity="center_vertical"
                 android:text="  코스 찾기"
                 android:textColor="@color/black" />
@@ -106,6 +106,17 @@
                 android:layout_marginBottom="10dp"
                 android:text="로그아웃"
                 android:drawableLeft="@drawable/ic_baseline_logout_24"
+                android:textColor="@color/black"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/login"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="로그인"
+                android:drawableLeft="@drawable/ic_baseline_login_24"
                 android:textColor="@color/black" />
 
         </LinearLayout>

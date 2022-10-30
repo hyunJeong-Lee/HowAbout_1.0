@@ -73,10 +73,10 @@ public interface RetrofitAPIService {
     Call<Integer> withdrawal(@Body ArrayList<JSONObject> userInfo, @Header("Authorization") String token);
 
     @POST("/myPage/myInfo/updateInfo") //회원정보 수정. token 적용 필요
-    Call<UserDTO> updateUser(@Body UserDTO user, @Header("Authorization") String token);
+    Call<Map<String, String>> updateUser(@Body UserDTO user, @Header("Authorization") String token);
 
     @POST("/myPage/myInfo/CheckPW") //비밀번호 확인. token 적용 필요
-    Call<Integer> checkPW(@Body Map u_pw);
+    Call<Integer> checkPW(@Body Map u_pw, @Header("Authorization") String token);
 
     //PopularCourse........................................................
 

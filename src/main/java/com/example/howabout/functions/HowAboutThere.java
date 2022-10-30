@@ -16,6 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.howabout.DTO.LoginDTO;
 import com.example.howabout.FindActivity;
+import com.example.howabout.LoginActivity;
 import com.example.howabout.MainActivity;
 import com.example.howabout.MyCourseActivity;
 import com.example.howabout.MyPageActivity;
@@ -48,6 +49,7 @@ public class HowAboutThere {
         Button btn_courcebar = activity.findViewById(R.id.btn_courcebar); //find course tab
         Button btn_mypagebar = activity.findViewById(R.id.btn_mypagebar); //myPage tab
         Button btn_mycourcebar = activity.findViewById(R.id.btn_mycourcebar); //myCourse tab
+        Button login = activity.findViewById(R.id.login); //logout tab
         Button logout = activity.findViewById(R.id.logout); //logout tab
         TextView side_hello = activity.findViewById(R.id.helloId);
 
@@ -62,8 +64,8 @@ public class HowAboutThere {
                 View drawerView = activity.findViewById(R.id.drawer);
                 drawerLayout.openDrawer(drawerView);
 
-                if(token == null){  side_hello.setText("로그인을 해주세요! 🙏"); }
-                else{ side_hello.setText(nickname+"님 환영합니다 🙌");}
+                if(token == null){  side_hello.setText("로그인을 해주세요! 🙏"); logout.setVisibility(View.GONE); login.setVisibility(View.VISIBLE);}
+                else{ side_hello.setText(nickname+"님 환영합니다 🙌"); logout.setVisibility(View.VISIBLE); login.setVisibility(View.GONE);}
 
 
                     Log.e("leehj", "activity : " + activity.getLocalClassName());
@@ -137,13 +139,25 @@ public class HowAboutThere {
 
                             Toast.makeText(activity, "로그아웃 되었습니다. ", Toast.LENGTH_SHORT).show();
 
-                            if (activity.getLocalClassName().equals("TEST")) {
-                                drawerLayout.closeDrawers();
-                            } else {
-                                activity.finish();
-                                activity_intent(activity, MainActivity.class);
-                            }
+                            activity.finish();
+                            activity_intent(activity, MainActivity.class);
+
+//                            if (activity.getLocalClassName().equals("TEST")) {
+//                                drawerLayout.closeDrawers();
+//                            } else {
+//                                activity.finish();
+//                                activity_intent(activity, MainActivity.class);
+//                            }
                         }
+                    }
+                });
+
+                //login button click event
+                login.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                        activity.finish();
+                        activity_intent(activity, LoginActivity.class);
                     }
                 });
             }

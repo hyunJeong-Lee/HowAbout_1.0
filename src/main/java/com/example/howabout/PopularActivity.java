@@ -46,7 +46,6 @@ public class PopularActivity extends AppCompatActivity {
     //인기코스 리스트
     ArrayList<JSONObject> popularlist = new ArrayList<JSONObject>();
     JSONObject jsonObject;
-    Intent intent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="30dp"
+            android:fontFamily="@font/sleigothic"
             android:text="장소 정보 보기"/>
         <ImageButton
             android:id="@+id/dialog_checkbtn"

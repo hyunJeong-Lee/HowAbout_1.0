@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //                            Toast.makeText(LoginActivity.this, "로그인 성공!", Toast.LENGTH_SHORT).show();
 
-                            //finish(); //나중에 처리 Main에서 Login으로 넘어오는 거니까
+                            finish(); //나중에 처리 Main에서 Login으로 넘어오는 거니까
                             FUNC.activity_intent(LoginActivity.this, MainActivity.class); //intent 처리
                         } else { //로그인이 실패한 경우
                             Toast.makeText(LoginActivity.this, loginDTO.getMsg(), Toast.LENGTH_SHORT).show();
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
     View.OnClickListener click_findIDPW = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-
+            FUNC.activity_intent(LoginActivity.this, FindUserInfoActivity.class);
         }
     };
 }
