@@ -24,28 +24,42 @@ public interface RetrofitAPIService {
     @POST("/splash/autoLogin") //autoLogin. token 적용 필요
     Call<Map<String, String>> autoLogin(@Header("Authorization") String token);
 
-    @POST("/login/signUp/idCheck") //아이디 중복 여부
-    Call<Integer> idCheck(@Body Map id_check);
+    //아이디 중복 여부
+    @POST("/login/signUp/idCheck")
+    Call<Integer> idcheck(@Body Map idck);
 
-    @POST("/login/signUp/nickCheck") //닉네임 중복 여부
-    Call<Integer> nickCheck(@Body Map nickName_check);
+    //닉네임 중복 여부
+    @POST("/login/signUp/nickCheck")
+    Call<Integer> nickcheck(@Body Map nicknameck);
 
-    @POST("/login/signUp/emailCheck") //닉네임 중복 여부
-    Call<Integer> emailCheck(@Body Map email_check);
+    //이메일 중복 여부
+    @POST("/login/signUp/emailSendAuth")
+    Call<Integer> emailSendCheck(@Body Map emailck);
+
+    //이메일 인증번호 확인
+    @POST("/login/signUp/emailAuthCheck")
+    Call<Integer> emailAuthCheck(@Body Map emailAuthck);
+
+    //이메일 인증번호
+    @POST("/login/sendPwEmail")
+    Call<Integer> emailSend(@Body Map email);
 
     @POST("/login/signUp") //회원가입 성공 여부
-    Call<Integer> signUp(@Body UserDTO userVo);
+    Call<Integer> all(@Body UserDTO userVo);
 
     @POST("/login/signIn") //로그인 성공 여부
     Call<LoginDTO> signIn(@Body Map id_pw);
 
-    @POST("/login/findMyId") //아이디 찾기
-    Call<Map<String, String>> search_id(@Body Map email);
+    //아이디 찾기
+    @POST("/login/sendIdEmail")
+    Call<Integer> search_id(@Body Map email);
 
-    @POST("/login/checkMyInfo") //비밀번호 재설정 회원확인
+    //비밀번호 재설정 회원확인
+    @POST("/login/checkMyInfo")
     Call<Integer> usercheck(@Body Map repwcheck);
 
-    @POST("/login/setNewPw") //비밀번호 재설정
+    //비밀번호 재설정
+    @POST("/login/setNewPw")
     Call<Integer> repw(@Body Map postrepw);
 
     //Find Course..............................................................
@@ -88,4 +102,8 @@ public interface RetrofitAPIService {
 
     @POST("/popularCourse/getCatCourse") //인기코스 구하기
     Call<ArrayList<JSONObject>> getCatCourse(@Body ArrayList<JSONObject> po);
+
+    //mycourse............................................................
+    @POST("/myCourse/myCourse")
+    Call<ArrayList<JSONObject>> myCourse(@Header("Authorization") String token);
 }

@@ -50,13 +50,24 @@ public class LoginActivity extends AppCompatActivity {
         check_autoLogin = (CheckBox) findViewById(R.id.login_check_autologin);
         check_autoLogin.setOnCheckedChangeListener(check_autologin);
 
-        //로그인 버튼 클릭
-        btn_login = (Button) findViewById(R.id.login_btn_login);
+        btn_login = (Button) findViewById(R.id.login_btn_login); //로그인 버튼 클릭
         btn_login.setOnClickListener(click_loginBtn);
 
-        tv_findIDPW = (TextView) findViewById(R.id.login_findIDPW);
+        tv_findIDPW = (TextView) findViewById(R.id.login_findIDPW); //아이디 찾기, 비밀번호 재설정 버튼 클릭
         tv_findIDPW.setOnClickListener(click_findIDPW);
+
+        btn_regist = (Button) findViewById(R.id.login_btn_registin);
+        btn_regist.setOnClickListener(click_regist);
     }
+
+    //regist button click event
+    View.OnClickListener click_regist = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            FUNC.activity_intent(LoginActivity.this, RegistActivity.class);
+            Toast.makeText(LoginActivity.this, "회원가입으로 넘어갑니다. 😊", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     //auto login check
     CompoundButton.OnCheckedChangeListener check_autologin = new CompoundButton.OnCheckedChangeListener() {

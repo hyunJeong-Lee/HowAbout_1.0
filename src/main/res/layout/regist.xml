@@ -50,12 +50,12 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_namedoubleck"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:backgroundTint="#ff5757"
                 android:text="중복확인"
                 android:textColor="#fff"
-                android:textSize="15dp" />
+                android:textSize="13dp" />
         </LinearLayout>
 
         <TextView
@@ -96,16 +96,95 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_iddoubleck"
                 android:layout_width="80dp"
-                android:layout_height="40dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
                 android:backgroundTint="#ff5757"
                 android:text="중복확인"
                 android:textColor="#fff"
-                android:textSize="15dp" />
+                android:textSize="13dp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/warning_id"
+            android:layout_width="280dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ff5757"
+            android:textSize="10dp" />
+
+        <TextView
+            android:layout_width="280dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:text="이메일*"
+            android:textSize="10dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/ed_reemail"
+                android:layout_width="195dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edge_black"
+                android:hint="이메일:"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_emaildoubleck"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:backgroundTint="#ff5757"
+                android:text="이메일 인증"
+                android:textColor="#fff"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:id="@+id/layout_emailconfirm"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/ed_emailconfirm"
+                android:layout_width="195dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@drawable/edge_black"
+                android:hint="이메일 인증 번호:"
+                android:inputType="textEmailAddress"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_emailconfirmck"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:backgroundTint="#ff5757"
+                android:text="확인"
+                android:textColor="#fff"
+                android:textSize="13dp" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/warning_email"
             android:layout_width="280dp"
             android:layout_height="15dp"
             android:layout_gravity="center"

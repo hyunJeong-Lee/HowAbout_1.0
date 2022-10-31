@@ -189,6 +189,8 @@ public class CourseInfoActivity extends AppCompatActivity {
         storeInfo_tv_url.setTextIsSelectable(true);
         storeInfo_tv_url.setSelected(true);
 
+        storeInfo_btn_road.setVisibility(View.VISIBLE);
+
         //전화 다이얼
         storeInfo_btn_phone.setOnClickListener(new View.OnClickListener() {
             @Override

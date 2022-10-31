@@ -2,6 +2,7 @@ package com.example.howabout.popular;
 
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class PopularAdapter extends BaseAdapter {
         Glide.with(context).load(list.get(i).getImage()).placeholder(R.drawable.error_img1).override(Target.SIZE_ORIGINAL).apply(new RequestOptions().transforms(new CenterCrop(),
                 new RoundedCorners(25))).into(imageView);
         TextView textView = view.findViewById(R.id.popular_text);
+//        Log.e("leehj", "Popular Adapter place data : "+list.get(i).getPlace());
         textView.setText(list.get(i).getPlace());
         return view;
     }

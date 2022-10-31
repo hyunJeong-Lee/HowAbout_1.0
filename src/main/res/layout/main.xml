@@ -162,7 +162,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
                     android:backgroundTint="@color/white"
-                    android:fontFamily="@font/yang"
+                    android:fontFamily="@font/jalnan_main"
                     android:text="인기 코스"
                     android:textColor="@color/gray"
                     android:textSize="25dp" />
@@ -185,7 +185,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/edge_circlemain"
                     android:backgroundTint="@color/white"
-                    android:fontFamily="@font/yang"
+                    android:fontFamily="@font/jalnan_main"
                     android:text="코스 찾기"
                     android:textColor="@color/gray"
                     android:textSize="25dp" />
@@ -198,7 +198,7 @@
                     android:background="@drawable/edge_circlemain"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/location_animation_red" />
+                    app:lottie_rawRes="@raw/select_your_course" />
 
                 <!--                <ImageButton-->
                 <!--                    android:id="@+id/main_img_main2"-->

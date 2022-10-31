@@ -18,9 +18,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -736,12 +738,12 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             storeInfo_dialog.setContentView(R.layout.store_info);
                             storeInfo_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-                            //data
+                            //data =================================================================
                             String placeName = marker_document.getPlaceName();
                             String address = marker_document.getAddressName();
                             String category = marker_document.getCategoryName();
                             String phone = marker_document.getPhone();
-                            String store_url = marker_document.getPlaceUrl();
+                            String storeUrl = marker_document.getPlaceUrl();
 
                             String url = "http:" + result.get("imgUrl"); //response data img Url 가져오기
                             Log.e("leehj", "img url : " + url);
@@ -751,16 +753,38 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             String storeTime = result.get("storeTime");
                             String starpoint = result.get("startpoint");
 
+                            //선언 & 세팅 ============================================================
+
                             Log.i("leehj", "marker document print : " + marker_document.toString());
                             Log.i("leehj", "response print: " + result.toString());
 
                             ImageView img = (ImageView) storeInfo_dialog.findViewById(R.id.storeInfo_img);
                             Glide.with(storeInfo_dialog.getContext()).load(url).into(img);
 
-                            TextView place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
+                            TextView tv_place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
+                            TextView tv_category = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_cat);
+                            TextView tv_address = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_address);
+                            TextView tv_tel = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_phone);
+                            TextView tv_store_url = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_url);
+                            TextView tv_time = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_time);
+                            TextView tv_review1 = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_reivew1);
+                            TextView tv_review2 = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_reivew2);
+                            TextView tv_review3 = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_reivew3);
+                            Button storeInfo_btn_phone = storeInfo_dialog.findViewById(R.id.storeInfo_btn_phone);
+                            Button storeInfo_btn_road = storeInfo_dialog.findViewById(R.id.storeInfo_btn_road);
 
 
-                            //창닫기 버튼 클릭 이벤트
+                            tv_place_name.setText(placeName);
+                            tv_category.setText(category);
+                            tv_address.setText(" "+address);
+                            tv_tel.setText(" "+phone);
+                            tv_store_url.setText(" "+storeUrl);
+                            tv_time.setText(" "+storeTime);
+                            tv_review1.setText(review1);
+                            tv_review2.setText(review2);
+                            tv_review3.setText(review3);
+
+                            //창닫기 버튼 클릭 이벤트 ==================================================
                             ImageButton cancel = (ImageButton) storeInfo_dialog.findViewById(R.id.storeInfo_cancel);
                             cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -769,9 +793,17 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                                 }
                             });
 
-                            //서버에서 받아온 정보 세팅
-                            TextView p_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
-                            //...
+                            //전화 다이얼
+                            storeInfo_btn_phone.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent telintent = new Intent(Intent.ACTION_DIAL);
+                                    telintent.setData(Uri.parse("tel:" + phone));
+                                    startActivity(telintent);
+                                }
+                            });
+
+                            storeInfo_btn_road.setVisibility(View.GONE);
                             storeInfo_dialog.show();
                         }
 
