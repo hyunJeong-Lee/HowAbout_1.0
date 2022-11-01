@@ -2,16 +2,11 @@ package com.example.howabout;
 
 import static net.daum.mf.map.api.MapPoint.mapPointWithGeoCoord;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;

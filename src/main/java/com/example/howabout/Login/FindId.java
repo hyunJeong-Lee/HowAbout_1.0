@@ -67,7 +67,7 @@ public class FindId extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.findid, container, false);
+        View view = inflater.inflate(R.layout.login_findid, container, false);
         ed_search_id_email = view.findViewById(R.id.ed_search_id_email);
 
         btn_search_id = view.findViewById(R.id.btn_search_id);

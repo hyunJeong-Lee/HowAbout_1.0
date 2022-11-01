@@ -1,12 +1,10 @@
 package com.example.howabout.Login;
 
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.howabout.API.RetrofitClient;
-import com.example.howabout.FindUserInfoActivity;
 import com.example.howabout.LoginActivity;
 import com.example.howabout.R;
 
@@ -77,7 +74,7 @@ public class ResetPw extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.resetpw, container, false);
+        View view = inflater.inflate(R.layout.login_resetpw, container, false);
         ed_reset_pw = view.findViewById(R.id.ed_reset_pw);
         ed_reset_pwcheck = view.findViewById(R.id.ed_reset_pwcheck);
         btn_reset_pw = view.findViewById(R.id.btn_reset_pw);

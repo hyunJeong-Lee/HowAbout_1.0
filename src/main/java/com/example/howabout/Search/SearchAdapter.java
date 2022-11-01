@@ -43,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.item_location, viewGroup, false);
+                .inflate(R.layout.find_item_location, viewGroup, false);
 
 //        //recycler view click event
 //        viewGroup.setOnClickListener(new View.OnClickListener() {

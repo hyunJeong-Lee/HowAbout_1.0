@@ -1,10 +1,8 @@
 package com.example.howabout;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +16,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
@@ -38,12 +35,15 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.Target;
 import com.example.howabout.API.KakaoAPIClient;
 import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.Search.CategoryResult;
@@ -125,7 +125,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
         private final View mCalloutBalloon;
 
         public CustomCalloutBalloonAdapter() {
-            mCalloutBalloon = getLayoutInflater().inflate(R.layout.custom_callout_balloon, null);
+            mCalloutBalloon = getLayoutInflater().inflate(R.layout.find_dialog_callout_balloon, null);
         }
 
         @Override
@@ -537,7 +537,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 
         if (CODE_1st) { //처음 찍히는 MapMarker balloon touched
             Dialog dialog = new Dialog(FindActivity.this);
-            dialog.setContentView(R.layout.first_balloon_click_dialog);
+            dialog.setContentView(R.layout.find_dialog_first_balloon_click);
             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             first_marker_location = new HashMap();
@@ -570,7 +570,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
             dialog.show();
         } else { //NOT 처음 찍히는 MapMarker balloon touched
             Dialog dialog_2st = new Dialog(FindActivity.this);
-            dialog_2st.setContentView(R.layout.balloon_click_dialog);
+            dialog_2st.setContentView(R.layout.find_dialog_balloon_click);
             dialog_2st.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
             ImageButton select = (ImageButton) dialog_2st.findViewById(R.id.balloon_click_btn_check);
@@ -759,7 +759,9 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             Log.i("leehj", "response print: " + result.toString());
 
                             ImageView img = (ImageView) storeInfo_dialog.findViewById(R.id.storeInfo_img);
-                            Glide.with(storeInfo_dialog.getContext()).load(url).into(img);
+//                            Glide.with(storeInfo_dialog.getContext()).load(url).into(img);
+                            Glide.with(storeInfo_dialog.getContext()).load(url).placeholder(R.drawable.rabbit_and_bear).override(Target.SIZE_ORIGINAL).apply(new RequestOptions().transforms(new CenterCrop(),
+                                    new RoundedCorners(25))).into(img);
 
                             TextView tv_place_name = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_placeName);
                             TextView tv_category = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_cat);

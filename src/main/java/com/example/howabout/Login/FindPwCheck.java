@@ -93,7 +93,7 @@ public class FindPwCheck extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.findpwcheck, container, false);
+        View view = inflater.inflate(R.layout.login_findpwcheck, container, false);
         //비밀번호 재설정 확인 버튼
         btn_find_pw_check = view.findViewById(R.id.btn_find_pw_check);
         //아이디 입력창

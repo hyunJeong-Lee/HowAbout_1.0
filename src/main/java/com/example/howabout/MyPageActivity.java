@@ -1,12 +1,10 @@
 package com.example.howabout;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -52,7 +49,7 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_page);
+        setContentView(R.layout.mypage);
 
         FUNC.sideBar(MyPageActivity.this); //사이드바
 
@@ -141,7 +138,7 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
             public void onClick(View view) {
                 //다이얼 로그 띄워서 비밀번호 확인 받고 정보 수정 페이지로 넘어가요
                 Dialog dialog = new Dialog(MyPageActivity.this);
-                dialog.setContentView(R.layout.dialog_inputpw);
+                dialog.setContentView(R.layout.mypage_dialog_inputpw);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 EditText et_inputPW = (EditText) dialog.findViewById(R.id.dialog_et_inputPW);
@@ -170,7 +167,7 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
                 JSONObject withDrawal_data = new JSONObject();
 
                 Dialog dialog = new Dialog(MyPageActivity.this);
-                dialog.setContentView(R.layout.dialog_withdrawal);
+                dialog.setContentView(R.layout.mypage_dialog_withdrawal);
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                 withdrawal_radioG = (RadioGroup) dialog.findViewById(R.id.dialog_with_radioGroup);
@@ -201,7 +198,7 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
                     public void onClick(View view) {
                         dialog.dismiss();
                         Dialog dialog_checkPW = new Dialog(MyPageActivity.this);
-                        dialog_checkPW.setContentView(R.layout.dialog_inputpw);
+                        dialog_checkPW.setContentView(R.layout.mypage_dialog_inputpw);
                         dialog_checkPW.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
                         EditText et_pw = (EditText) dialog_checkPW.findViewById(R.id.dialog_et_inputPW);

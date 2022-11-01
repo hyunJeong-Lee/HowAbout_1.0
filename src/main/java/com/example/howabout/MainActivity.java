@@ -25,10 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.example.howabout.Fragment.FragMyAdapter;
 import com.example.howabout.functions.HowAboutThere;
 
-import me.relex.circleindicator.CircleIndicator3;
 
 
 public class MainActivity extends AppCompatActivity {

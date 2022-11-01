@@ -87,5 +87,5 @@
 
     </LinearLayout>
 
-    <include layout="@layout/sidebar" />
+    <include layout="@layout/main_sidebar" />
 </androidx.drawerlayout.widget.DrawerLayout>
