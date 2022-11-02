@@ -119,6 +119,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     static boolean CODE_1st = false;
     static boolean CODE_2nd = false;
     static boolean CODE_3rd = false;
+    static String CODE_flag = "3.0";
 
     //CalloutBalloonAdapter 인터페이스 구현
     class CustomCalloutBalloonAdapter implements CalloutBalloonAdapter {
@@ -673,29 +674,38 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 //                                String token = "Bearer "+sharedPreferences.getString("token", null);
 //                                Log.i("leehj", "token: " + token);
                             String request_token = "Bearer " + token;
-                            Call<Map> saveCourse = RetrofitClient.getApiService().saveCourse(result_list, request_token);
-                            saveCourse.enqueue(new Callback<Map>() {
+                            Call<Map<String, String>> saveCourse = RetrofitClient.getApiService().saveCourse(result_list, request_token);
+                            saveCourse.enqueue(new Callback<Map<String, String>>() {
                                 @Override
-                                public void onResponse(Call<Map> call, Response<Map> response) {
+                                public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
                                     if (response.isSuccessful()) {
                                         new Handler().postDelayed(new Runnable() {
                                             @Override
                                             public void run() {
                                                 Log.e("leehj", "데이터 보내졌다구,,!");
                                                 Log.i("leehj", "save course response: " + response.body());
+                                                Log.i("leehj", "save course response - flag: " + response.body().get("flag"));
+                                                Log.i("leehj", "save course - token: " + request_token);
+                                                CODE_flag = response.body().get("flag");
 
+                                                if (CODE_flag.equals("1")) {
+                                                    aSwitch.setChecked(true);
+                                                    Toast.makeText(FindActivity.this, "내 코스에 저장되어 있는 코스입니다 😗", Toast.LENGTH_SHORT).show();
+                                                } else {
+                                                    aSwitch.setChecked(false);
+                                                }
 //                                                    if(response.body() != null) {
 //                                                        Map<String, String> result = response.body();
 //                                                        saveMyCourse_data.put("r_id", result.get("r_id")); //서버 응답값 오면 풀어주세요
 //                                                        saveMyCourse_data.put("c_id", result.get("c_id"));
 //                                                    }
                                             }
-                                        }, 1000 * 4);
+                                        }, 1000);
                                     }
                                 }
 
                                 @Override
-                                public void onFailure(Call<Map> call, Throwable t) {
+                                public void onFailure(Call<Map<String, String>> call, Throwable t) {
                                 }
                             });
 //                                }
@@ -778,10 +788,10 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 
                             tv_place_name.setText(placeName);
                             tv_category.setText(category);
-                            tv_address.setText(" "+address);
-                            tv_tel.setText(" "+phone);
-                            tv_store_url.setText(" "+storeUrl);
-                            tv_time.setText(" "+storeTime);
+                            tv_address.setText(" " + address);
+                            tv_tel.setText(" " + phone);
+                            tv_store_url.setText(" " + storeUrl);
+                            tv_time.setText(" " + storeTime);
                             tv_review1.setText(review1);
                             tv_review2.setText(review2);
                             tv_review3.setText(review3);
@@ -950,24 +960,27 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 //            if(token != null){
 //                Log.i("leehj", "token: " + token);
 
-            if (b) {
-                Log.e("leehj", "스위치 on 서버에 내코스 저장 해요!!");
+            if (b) { //switch on!!
+                if (CODE_flag.equals("0")) {//저장하지 않은 코스이면
+                    Log.e("leehj", "스위치 on 서버에 내코스 저장 해요!!");
 //                saveMyCourse_data.put("u_id", "leehj");
-                Call<Integer> save_myCourse = RetrofitClient.getApiService().courseDibs(saveMyCourse_data, request_token);
-                save_myCourse.enqueue(new Callback<Integer>() {
-                    @Override
-                    public void onResponse(Call<Integer> call, Response<Integer> response) {
-                        Log.i("leehj", "성공 시 return value는 1: " + response.body());
-                        Toast.makeText(FindActivity.this, "내 코스에 저장됐습니다.", Toast.LENGTH_SHORT).show();
+                    Call<Integer> save_myCourse = RetrofitClient.getApiService().courseDibs(saveMyCourse_data, request_token);
+                    save_myCourse.enqueue(new Callback<Integer>() {
+                        @Override
+                        public void onResponse(Call<Integer> call, Response<Integer> response) {
+                            Log.i("leehj", "성공 시 return value는 1: " + response.body());
+                            Toast.makeText(FindActivity.this, "내 코스에 저장됐습니다.", Toast.LENGTH_SHORT).show();
 //                            compoundButton.setClickable(false);
-                    }
+                        }
 
-                    @Override
-                    public void onFailure(Call<Integer> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<Integer> call, Throwable t) {
 
-                    }
-                });
-            } else {
+                        }
+                    });
+                }
+            } else { //switch off!!
+                CODE_flag = "0";
                 Log.e("leehj", "스위치 off!!! 서버에 내코스 삭제해요");
                 //내 코스 삭제
                 Call<Integer> save_myCourse = RetrofitClient.getApiService().courseDibs(saveMyCourse_data, request_token);

@@ -24,13 +24,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:backgroundTint="#FFF"
-                android:src="@drawable/ic_baseline_dehaze_24" />
+                android:src="@drawable/sidebar_menu_red_resize" />
 
             <EditText
                 android:id="@+id/ed_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_baseline_search_24"
+                android:fontFamily="@font/godo_m"
                 android:hint=" 검색할 장소를 입력해주세요"
                 android:textColorHighlight="#EC9393"
                 android:textCursorDrawable="@drawable/cursor"

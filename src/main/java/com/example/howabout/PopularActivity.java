@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -154,16 +155,28 @@ public class PopularActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        SharedPreferences sharedPreferences = getSharedPreferences("USER", Activity.MODE_PRIVATE);
+        String token = sharedPreferences.getString("token", null);
+        String request_token = "Bearer "+ token;
+        String sand_token;
+        if(token != null){
+            sand_token = request_token;
+        }else{
+            sand_token = null;
+        }
+
         ArrayList<JSONObject> jsonObjectArrayList = new ArrayList<>();
         jsonObjectArrayList.add(popular);
-        Call<ArrayList<JSONObject>> polcourse = RetrofitClient.getApiService().getCatCourse(jsonObjectArrayList);
+        Log.e("leehj", "popular :: sand_token: "+sand_token);
+        Call<ArrayList<JSONObject>> polcourse = RetrofitClient.getApiService().getCatCourse(jsonObjectArrayList, sand_token);
         polcourse.enqueue(new Callback<ArrayList<JSONObject>>() {
             @Override
             public void onResponse(Call<ArrayList<JSONObject>> call, Response<ArrayList<JSONObject>> response) {
                 //서버에서 받은 값 popularlist에 저장
                 popularlist = response.body();
-                String str = popularlist.toString();
-                Log.i("subin", "서버에서 준 값" + str);
+                Log.e("leehj", "popular :: getCatCourse response body: "+popularlist);
+//                String str = popularlist.toString();
+//                Log.i("leehj", "서버에서 준 값" + str);
 
                 //서버에서 받은 값 키값으로 불러오기 위해서 jsonobject 생성
                 try {

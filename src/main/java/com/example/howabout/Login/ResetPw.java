@@ -92,11 +92,11 @@ public class ResetPw extends Fragment {
                 final String UserPw = ed_reset_pw.getText().toString();
                 try {
                     if (UserPw.equals("")) {
-                        warning_repw.setText("8자 이상 30자 이하로 비밀번호를 입력해주세요");
+                        warning_repw.setText("6자 이상 30자 이하로 비밀번호를 입력해주세요");
                     } else {
                         warning_repw.setText("");
-                        if (UserPw.length() < 8) {
-                            warning_repw.setText("비밀번호는 8자 이상 입력해야 합니다");
+                        if (UserPw.length() < 6) {
+                            warning_repw.setText("비밀번호는 6자 이상 입력해야 합니다");
                         }
                     }
                 } catch (Exception e) {
@@ -127,8 +127,8 @@ public class ResetPw extends Fragment {
                 try {
                     if (UserPw.equals(pwcheck)) {
                         warning_repwcheck.setText("");
-                        if (pwcheck.length() < 8) {
-                            warning_repwcheck.setText("비밀번호를 8자 이상 적어주세요");
+                        if (pwcheck.length() < 6) {
+                            warning_repwcheck.setText("비밀번호를 6자 이상 적어주세요");
                         } else {
                             inputRePwCk = pwcheck;
                         }

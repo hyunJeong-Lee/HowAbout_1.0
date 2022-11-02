@@ -21,49 +21,47 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:background="#ff5757"
+            android:layout_height="300dp"
+            android:background="@color/main_color"
             android:orientation="vertical">
 
             <com.airbnb.lottie.LottieAnimationView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/confetti_lottie_animation2" />
+                app:lottie_rawRes="@raw/rckt" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="저기어때."
-                android:fontFamily="@font/jalnan_main"
-                android:textColor="@color/white"
-                android:textSize="40dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/jalnan_main"
+                    android:text="저기어때."
+                    android:textColor="@color/white"
+                    android:textSize="40dp" />
 
-            <TextView
-                android:id="@+id/helloId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:fontFamily="@font/godo_m"
-                android:gravity="center"
-                android:padding="10dp"
-                android:singleLine="true"
-                android:text="저기어때에 오신걸 환영합니다."
-                android:textColor="@color/white"
-                android:textSize="18dp" />
+                <TextView
+                    android:id="@+id/helloId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:fontFamily="@font/godo_m"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="저기어때에 오신걸 환영합니다."
+                    android:textColor="@color/white"
+                    android:textSize="18dp" />
             </RelativeLayout>
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -99,6 +97,19 @@
                     android:textSize="20dp"
                     android:fontFamily="@font/godo_m"
                     android:textColor="@color/black" />
+                <Button
+                    android:id="@+id/btn_popularbar"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:drawableLeft="@drawable/main_ic_round_star_24"
+                    android:gravity="center_vertical"
+                    android:text="  인기 코스"
+                    android:layout_marginTop="10dp"
+                    android:textSize="20dp"
+                    android:fontFamily="@font/godo_m"
+                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/btn_mypagebar"
@@ -120,13 +131,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/white"
-                    android:drawableLeft="@drawable/ic_baseline_add_location_alt_24"
+                    android:drawableLeft="@drawable/main_ic_round_favorite_24"
                     android:gravity="center_vertical"
                     android:text="  내 코스"
                     android:layout_marginTop="10dp"
                     android:textSize="20dp"
                     android:fontFamily="@font/godo_m"
                     android:textColor="@color/black" />
+
             </LinearLayout>
 
             <LinearLayout

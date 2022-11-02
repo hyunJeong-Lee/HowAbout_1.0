@@ -19,7 +19,7 @@ public class FindUserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_layout_findUserInfo);
+        setContentView(R.layout.login_finduserinfo);
 
         findPwCheck = new FindPwCheck();
         findId = new FindId();

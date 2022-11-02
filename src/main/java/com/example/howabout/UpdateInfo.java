@@ -9,17 +9,21 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
 import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.DTO.UserDTO;
 import com.example.howabout.functions.User;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -44,7 +48,7 @@ public class UpdateInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.mypage_update_info);
+        setContentView(R.layout.test_layout);
 
         intent = getIntent();
         UserDTO myInfo = (UserDTO) intent.getSerializableExtra("user_info");
@@ -231,13 +235,19 @@ public class UpdateInfo extends AppCompatActivity {
                     updateInfo.enqueue(new Callback<Map<String, String>>() {
                         @Override
                         public void onResponse(Call<Map<String, String>> call, Response<Map<String, String>> response) {
-                            Log.e("leehj", "정보수정 데이터 변경 성공: " + response.body());
+                            Map<String, String> result_map = response.body();
+                            Log.e("leehj", "정보수정 데이터 변경 성공: " + result_map);
                             Toast.makeText(UpdateInfo.this, "정보가 변경되었습니다.", Toast.LENGTH_SHORT).show();
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            editor.putString("token", response.body().get("jwt"));
-                            editor.putString("u_nick", response.body().get("nick")); //닉네임 저장할 것
+                            editor.putString("token", result_map.get("jwt"));
+                            editor.putString("u_nick", result_map.get("nick")); //닉네임 저장할 것
                             editor.commit();
                             Log.e("leehj", "정보수정 성공 시 반환 토큰 출력: " + sharedPreferences.getString("token", null));
+
+                            View view = getLayoutInflater().inflate(R.layout.main, null);
+                            TextView tv_hello_main = (TextView)view.findViewById(R.id.main_hello);
+                            tv_hello_main.setText(result_map.get("nick"));
+
                             setResult(CODE_SUCCESS);
                             finish();
                         }

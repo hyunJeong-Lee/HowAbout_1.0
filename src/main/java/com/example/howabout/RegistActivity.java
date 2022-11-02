@@ -145,10 +145,10 @@ public class RegistActivity extends AppCompatActivity {
                 final String UserPw = ed_pw.getText().toString();
                 try {
                     if (UserPw.equals("")) {
-                        warning_pw.setText("8자 이상 30자 이하로 비밀번호를 입력해주세요");
+                        warning_pw.setText("6자 이상 30자 이하로 비밀번호를 입력해주세요");
                     } else {
-                        if (UserPw.length() < 8) {
-                            warning_pw.setText("비밀번호는 8자 이상 입력해야 합니다");
+                        if (UserPw.length() < 6) {
+                            warning_pw.setText("비밀번호는 6자 이상 입력해야 합니다");
                         } else {
                             warning_pw.setText("");
                         }
@@ -172,8 +172,8 @@ public class RegistActivity extends AppCompatActivity {
                     warning_pw.setText("비밀번호를 입력해주세요");
                 } else {
                     warning_pw.setText("");
-                    if (UserPw.length() < 8) {
-                        warning_pw.setText("비밀번호는 8자 이상 입력해야 합니다");
+                    if (UserPw.length() < 6) {
+                        warning_pw.setText("비밀번호는 6자 이상 입력해야 합니다");
                     } else {
                         inputPw = UserPw;
                     }
@@ -209,8 +209,8 @@ public class RegistActivity extends AppCompatActivity {
                         warning_name.setText("닉네임을 입력해주세요");
                         return;
                     } else {
-                        if (UserNick.length() < 3) {
-                            warning_name.setText("닉네임은 3자이상 입력해야합니다");
+                        if (UserNick.length() < 2) {
+                            warning_name.setText("닉네임은 2자이상 입력해야합니다");
                         }
                         //닉네임 3자 이상 입력
                         else {
@@ -355,8 +355,8 @@ public class RegistActivity extends AppCompatActivity {
                     warning_id.setText("아이디를 입력해주세요");
                     return;
                 } else {
-                    if (UserId.length() < 8) {
-                        warning_id.setText("아이디는 8자 이상 입력해야 합니다");
+                    if (UserId.length() < 6) {
+                        warning_id.setText("아이디는 6자 이상 입력해야 합니다");
                     } else {
                         //아이디 8자 이상 입력 완료
                         checkId = 1;

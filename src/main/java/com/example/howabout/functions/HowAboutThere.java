@@ -20,6 +20,7 @@ import com.example.howabout.LoginActivity;
 import com.example.howabout.MainActivity;
 import com.example.howabout.MyCourseActivity;
 import com.example.howabout.MyPageActivity;
+import com.example.howabout.PopularActivity;
 import com.example.howabout.R;
 import com.example.howabout.TEST;
 
@@ -47,6 +48,7 @@ public class HowAboutThere {
         //DrawerLayout Menu
         ImageButton btn_open = activity.findViewById(R.id.btn_open); //sidebar open button
         Button btn_courcebar = activity.findViewById(R.id.btn_courcebar); //find course tab
+        Button btn_popularbar = activity.findViewById(R.id.btn_popularbar); //find course tab
         Button btn_mypagebar = activity.findViewById(R.id.btn_mypagebar); //myPage tab
         Button btn_mycourcebar = activity.findViewById(R.id.btn_mycourcebar); //myCourse tab
         Button login = activity.findViewById(R.id.login); //logout tab
@@ -91,6 +93,17 @@ public class HowAboutThere {
                         } else {
 //                            activity.finish();
                             activity_intent(activity, FindActivity.class);
+                        }
+                    }
+                });
+                btn_popularbar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (activity.getLocalClassName().equals("PopularActivity")) {
+                            drawerLayout.closeDrawers();
+                        } else {
+                            activity.finish();
+                            activity_intent(activity, PopularActivity.class);
                         }
                     }
                 });

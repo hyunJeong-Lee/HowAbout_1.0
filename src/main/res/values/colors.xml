@@ -18,4 +18,7 @@
     <color name="gray">#544f4e</color>
     <color name="light_gray">#D4D4D4</color>
     <color name="light_gray2">#EEEEEE</color>
+    <color name="purple">#8028FF</color>
+    <color name="pink">#FFD5E4</color>
+    <color name="pink2">#FEEBF7</color>
 </resources>

@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.howabout.API.RetrofitClient;
@@ -34,7 +35,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MyPageActivity extends AppCompatActivity implements Serializable {
-    EditText et_nick, et_id, et_email, et_birth, et_gender;
+    TextView et_nick, et_id, et_email, et_birth, et_gender;
     Button btn_editInfo, btn_withdrawal;
     RadioGroup withdrawal_radioG;
     UserDTO user_info;
@@ -84,11 +85,15 @@ public class MyPageActivity extends AppCompatActivity implements Serializable {
 
     //유저 정보 세팅하기
     public void setUserInfo(UserDTO user) {
-        et_id = (EditText) findViewById(R.id.mypage_et_id);
-        et_nick = (EditText) findViewById(R.id.mypage_et_nick);
-        et_email = (EditText) findViewById(R.id.mypage_et_email);
-        et_gender = (EditText) findViewById(R.id.mypage_et_gender);
-        et_birth = (EditText) findViewById(R.id.mypage_et_birth);
+        et_id = (TextView) findViewById(R.id.mypage_tv_id);
+        et_nick = (TextView) findViewById(R.id.mypage_tv_nickname);
+        et_email = (TextView) findViewById(R.id.mypage_tv_email);
+        et_gender = (TextView) findViewById(R.id.mypage_tv_gender);
+        et_birth = (TextView) findViewById(R.id.mypage_tv_birth);
+
+        et_id.setSelected(true);
+        et_nick.setSelected(true);
+        et_email.setSelected(true);
 
         et_id.setText(user.getU_id());
         et_nick.setText(user.getU_nick());

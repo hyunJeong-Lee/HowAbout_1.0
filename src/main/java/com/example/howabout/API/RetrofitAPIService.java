@@ -18,6 +18,10 @@ import retrofit2.http.POST;
 
 public interface RetrofitAPIService {
 
+    @GET("/api/v1/closetlist")
+    Call<ArrayList<JSONObject>> test1();
+
+
     @POST("/splash/test") //autoLogin. token 적용 필요
     Call<String> test(@Header("Authorization") String token);
 
@@ -70,7 +74,7 @@ public interface RetrofitAPIService {
     Call<ArrayList<CategoryResult>> cafe(@Body ArrayList<JSONObject> arrayList);
 
     @POST("/myCourse/saveCourse") //코스 저장. token 적용 필요
-    Call<Map> saveCourse(@Body ArrayList<Object> arrayList, @Header("Authorization") String token);
+    Call<Map<String, String>> saveCourse(@Body ArrayList<Object> arrayList, @Header("Authorization") String token);
 
     @POST("/myCourse/courseDibs")//내 코스 저장. token 적용 필요
     Call<Integer> courseDibs(@Body Map saveMyCourse_data, @Header("Authorization") String token);
@@ -101,7 +105,7 @@ public interface RetrofitAPIService {
     Call<ArrayList<String>> getSi(@Body String getsi);
 
     @POST("/popularCourse/getCatCourse") //인기코스 구하기
-    Call<ArrayList<JSONObject>> getCatCourse(@Body ArrayList<JSONObject> po);
+    Call<ArrayList<JSONObject>> getCatCourse(@Body ArrayList<JSONObject> po, @Header("Authorization") String token);
 
     //mycourse............................................................
     @POST("/myCourse/myCourse")
