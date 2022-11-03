@@ -15,198 +15,212 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#ff5757"
-            >
+            android:layout_height="230dp"
+            android:background="@color/main_color">
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/mypage_earth" />
 
             <ImageButton
                 android:id="@+id/btn_open"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:backgroundTint="#FF5757"
-                android:src="@drawable/ic_baseline_dehaze"
-                android:visibility="invisible"
-                android:focusable="false"/>
+                android:background="@android:color/transparent"
+                android:src="@drawable/sidebar_menu_red_resize" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/jalnan_main"
                 android:gravity="center"
                 android:text="회원정보수정"
-                android:textColor="@color/white"
-                android:textSize="22dp"
+                android:textColor="@color/main_color"
+                android:textSize="30dp"
                 android:textStyle="bold" />
 
-        </RelativeLayout>
 
-        <LinearLayout
+
+        </RelativeLayout>
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#EEEEEE"
-            android:orientation="vertical"
-            android:padding="10dp">
+            app:cardCornerRadius="50dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginBottom="-50dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#fff"
                 android:orientation="vertical"
-                android:paddingTop="30dp">
-
+                android:layout_margin="40dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
                     android:orientation="horizontal">
-
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
                         android:text="닉네임"
-                        android:textSize="15dp" />
-
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etNick"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
                         android:padding="10dp"
-                        android:textSize="18dp" />
-
+                        android:textSize="20dp"
+                        android:singleLine="true"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:layout_marginRight="7dp"
+                        android:fontFamily="@font/godo_m"/>
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/update_btnNickcheck"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="중복확인" />
-
-
+                        android:layout_height="wrap_content"
+                        android:text="중복확인"
+                        android:fontFamily="@font/godo_m"
+                        android:background="@drawable/round_btn"
+                        android:backgroundTint="@color/cream"
+                        />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="아이디 "
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="아이디"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etId"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:enabled="false"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:textSize="18dp" />
+                        android:textSize="20dp"
+                        android:singleLine="true"
+                        android:focusable="false"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="이메일 "
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="이메일"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etEmail"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:enabled="false"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:textSize="18dp" />
+                        android:textSize="20dp"
+                        android:singleLine="true"
+                        android:focusable="false"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="비밀번호 "
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="비밀번호"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etPW"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:gravity="center"
-                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:textSize="18dp" />
+                        android:textSize="20dp"
+                        android:singleLine="true"
+                        android:inputType="textPassword"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="비밀번호 확인 "
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="비밀번호 확인"
+                        android:singleLine="true"
+                        android:textSize="15dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etRePW"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:gravity="center"
-                        android:inputType="textPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:textSize="18dp" />
+                        android:textSize="20dp"
+                        android:inputType="textPassword"
+                        android:singleLine="true"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="성별 "
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="성별"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <RadioGroup
                         android:id="@+id/radioGender"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -224,67 +238,70 @@
 
                     </RadioGroup>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
                     <TextView
                         android:layout_width="100dp"
-                        android:layout_height="45dp"
-                        android:gravity="center_vertical"
-                        android:text="생년월일"
-                        android:textSize="15dp" />
-
+                        android:layout_height="wrap_content"
+                        android:text="생일"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:fontFamily="@font/godo_m"/>
                     <EditText
                         android:id="@+id/update_etBirth"
-                        android:layout_width="200dp"
-                        android:layout_height="45dp"
-                        android:background="@drawable/edge_gray"
-                        android:focusable="false"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:textSize="18dp" />
-
+                        android:textSize="20dp"
+                        android:singleLine="true"
+                        android:background="@drawable/round_btn"
+                        android:gravity="center"
+                        android:focusable="false"
+                        android:fontFamily="@font/godo_m"/>
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <Button
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/update_btnCheck"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
-                        android:backgroundTint="#ff5757"
-                        android:text="수정하기" />
-
-                    <Button
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/round_btn"
+                        android:backgroundTint="@color/main_color"
+                        android:text="정보 수정하기"
+                        android:fontFamily="@font/godo_m"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"/>
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/update_btnBack"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:backgroundTint="#ff5757"
-                        android:text="돌아가기" />
+                        android:background="@drawable/round_btn"
+                        android:backgroundTint="@color/cream"
+                        android:text="돌아가기"
+                        android:fontFamily="@font/godo_m"
+                        android:textSize="20dp"
+                        android:textColor="@color/gray"
+                        android:textStyle="bold"/>
                 </LinearLayout>
-
-<!--                <ImageView-->
-<!--                    android:layout_width="60dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_gravity="center|bottom"-->
-<!--                    android:src="@drawable/howaboutlogo" />-->
             </LinearLayout>
-        </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 
     <include layout="@layout/main_sidebar" />
-
 </androidx.drawerlayout.widget.DrawerLayout>

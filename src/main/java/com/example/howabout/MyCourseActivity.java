@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.howabout.API.RetrofitClient;
 import com.example.howabout.functions.HowAboutThere;
 import com.example.howabout.popular.PopularAdapter;
@@ -38,7 +40,9 @@ public class MyCourseActivity extends AppCompatActivity {
     JSONObject jsonObject;
     ArrayList<JSONObject> mycourselist = new ArrayList<JSONObject>();
     HowAboutThere FUNC = new HowAboutThere();
-
+    LottieAnimationView animationView;
+    TextView tv_mynull;
+    TextView tv_mycourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,9 @@ public class MyCourseActivity extends AppCompatActivity {
 
         //sidebar
         FUNC.sideBar(MyCourseActivity.this);
+        animationView=findViewById(R.id.animatemy);
+        tv_mynull=findViewById(R.id.tv_mynull);
+        tv_mycourse=findViewById(R.id.tv_mycourse);
         //token여부 확인하기
         sharedPreferences = getSharedPreferences("USER", Activity.MODE_PRIVATE);
         String token = sharedPreferences.getString("token", null);
@@ -94,7 +101,12 @@ public class MyCourseActivity extends AppCompatActivity {
                 //서버에서 받은 값 키값으로 불러오기 위해서 jsonobject 생성
                 try {
                     if (mycourselist.isEmpty()) {
-                        Toast.makeText(MyCourseActivity.this, "내 코스가 없습니다", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MyCourseActivity.this, "내 코스가 없습니다", Toast.LENGTH_SHORT).show();
+                        tv_mycourse.setVisibility(View.GONE);
+                        animationView.setVisibility(View.VISIBLE);
+                        tv_mynull.setVisibility(View.VISIBLE);
+                        animationView.loop(true);
+                        animationView.playAnimation();
                     } else {
                         //불러온 값 크기에 맞추어 list에 저장 size
                         for (int i = 0; i < mycourselist.size(); i++) {

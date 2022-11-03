@@ -5,6 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#86EAEAEA"
     android:orientation="vertical"
     tools:context=".FindActivity">
 
@@ -26,21 +27,27 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
-                android:backgroundTint="#FFF"
-                android:src="@drawable/ic_baseline_dehaze_24" />
+                android:backgroundTint="#86EAEAEA"
+                android:src="@drawable/sidebar_menu_red_resize" />
 
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/map_mycourse"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_margin="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="4"
-            android:orientation="vertical">
+            app:cardCornerRadius="40dp"
+            app:cardElevation="10dp">
 
+            <LinearLayout
+                android:id="@+id/map_mycourse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -48,40 +55,70 @@
             android:layout_weight="4"
             android:orientation="vertical">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/place1"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="70dp"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/searchview_background"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/edge_circlemain2"
+                android:backgroundTint="#FF5757"
+                android:fontFamily="@font/jalnan_main"
+                android:gravity="center"
                 android:hint="첫번째 장소 소개"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/place2"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/place1"
                 android:layout_centerHorizontal="true"
+                android:layout_marginLeft="70dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/searchview_background"
+                android:layout_marginRight="70dp"
+                android:background="@drawable/edge_circlemain2"
+                android:backgroundTint="#74B2B2B2"
+                android:fontFamily="@font/jalnan_main"
+                android:gravity="center"
                 android:hint="두번째 장소 소개"
                 android:padding="10dp"
+                android:textColor="@color/white"
                 android:textSize="18dp" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="50dp"
+                android:layout_toLeftOf="@+id/btn_favorite"
+                android:src="@drawable/ic_baseline_remove_24" />
 
             <ToggleButton
                 android:id="@+id/btn_favorite"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="50dp"
                 android:background="@drawable/button_favorite"
                 android:checked="false"
-                android:layout_marginBottom="50dp"
                 android:textOff=""
-                android:textOn=""
+                android:textOn="" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true" />
+                android:layout_marginLeft="60dp"
+                android:layout_marginBottom="50dp"
+                android:layout_toRightOf="@+id/btn_favorite"
+                android:src="@drawable/ic_baseline_add_24" />
 
         </RelativeLayout>
 

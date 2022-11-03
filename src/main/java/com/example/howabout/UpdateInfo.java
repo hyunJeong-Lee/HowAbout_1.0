@@ -48,7 +48,7 @@ public class UpdateInfo extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_layout);
+        setContentView(R.layout.mypage_update_info);
 
         intent = getIntent();
         UserDTO myInfo = (UserDTO) intent.getSerializableExtra("user_info");

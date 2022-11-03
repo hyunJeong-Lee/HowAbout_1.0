@@ -102,7 +102,7 @@ public class HowAboutThere {
                         if (activity.getLocalClassName().equals("PopularActivity")) {
                             drawerLayout.closeDrawers();
                         } else {
-                            activity.finish();
+//                            activity.finish();
                             activity_intent(activity, PopularActivity.class);
                         }
                     }

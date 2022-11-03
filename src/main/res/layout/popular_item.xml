@@ -12,7 +12,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:adjustViewBounds="true"
-        android:background="@drawable/edge_circle"
+        android:background="@drawable/round_square"
         android:scaleType="fitXY"
         android:src="@drawable/rabbit3" />
 
@@ -27,6 +27,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:text="천안시 동남구 코스"
+        android:fontFamily="@font/godo_m"
         android:textColor="@color/white"
         android:textSize="18dp"
         android:textStyle="bold" />

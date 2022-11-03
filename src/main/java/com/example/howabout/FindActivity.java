@@ -196,6 +196,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
             if (ed_search.getText().toString().length() > 0) {
                 mapView.removeAllPolylines();
                 mapView.removeAllPOIItems();
+                aSwitch.setChecked(false);
                 searchKeyword(keyword);
             }
 //            else {
@@ -674,6 +675,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 //                                String token = "Bearer "+sharedPreferences.getString("token", null);
 //                                Log.i("leehj", "token: " + token);
                             String request_token = "Bearer " + token;
+                            Log.e("leehj", "\n코스 저장 데이터 요청하기 =============================");
                             Call<Map<String, String>> saveCourse = RetrofitClient.getApiService().saveCourse(result_list, request_token);
                             saveCourse.enqueue(new Callback<Map<String, String>>() {
                                 @Override
@@ -720,6 +722,13 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
             storeInfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Dialog loading_dialog = new Dialog(FindActivity.this);
+                    loading_dialog.setContentView(R.layout.find_loading_dialog);
+                    loading_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    loading_dialog.setCancelable(false);
+                    loading_dialog.show();
+
+
 //                    dialog_2st.cancel();
                     Document marker_document = (Document) mapPOIItem.getUserObject();
 //                    Log.i("leehj", "가게 정보 보기 marker document: " + marker_document.toString()); //@@@
@@ -764,9 +773,11 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             String starpoint = result.get("startpoint");
 
                             //선언 & 세팅 ============================================================
-
+//=================================================================================================================================================================================
                             Log.i("leehj", "marker document print : " + marker_document.toString());
                             Log.i("leehj", "response print: " + result.toString());
+
+                            loading_dialog.dismiss();
 
                             ImageView img = (ImageView) storeInfo_dialog.findViewById(R.id.storeInfo_img);
 //                            Glide.with(storeInfo_dialog.getContext()).load(url).into(img);

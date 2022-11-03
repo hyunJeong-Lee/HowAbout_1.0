@@ -285,7 +285,8 @@ public class RegistActivity extends AppCompatActivity {
                             if (ckemail == 1) {
                                 warning_email.setText("");
                                 inputEmail = email;
-                                Toast.makeText(RegistActivity.this, "완료", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(RegistActivity.this, "완료", Toast.LENGTH_SHORT).show();
+                                warning_email.setText("인증변호를 발송했습니다. 인증번호가 오지 않으면 정보가 정확한지 또는 스팸문자함을 확인해주세요.");
                                 layout_email.setVisibility(View.VISIBLE);
                                 return;//검증완료
 
@@ -464,11 +465,11 @@ public class RegistActivity extends AppCompatActivity {
                                 if (allres == 1) {
                                     Intent intent = new Intent(RegistActivity.this, LoginActivity.class);
                                     startActivity(intent);
+                                    Toast.makeText(RegistActivity.this, "회원가입에 성공했습니다! ", Toast.LENGTH_SHORT).show();
                                     Log.i("subin", "regist success!!");
                                 } else {
                                     //회원가입 실패
                                     Toast.makeText(RegistActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
-
                                     Log.i("subin", "회원가입 실패");
                                 }
                             }
