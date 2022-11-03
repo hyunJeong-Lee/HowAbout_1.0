@@ -113,7 +113,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
     private boolean isTrackingMode = false;
 
     //반경
-    int radius = 300;
+    int radius = 600;
 
     //코스 찍기 관련 code
     static boolean CODE_1st = false;
@@ -153,7 +153,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 
         //위치검색.
         rl_search = (RecyclerView) findViewById(R.id.rl_search);
-        rl_search.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
+//        rl_search.addItemDecoration(new DividerItemDecoration(getApplicationContext(), 0));
         ed_search = findViewById(R.id.ed_search);
         ed_search.addTextChangedListener(textWatcher);
 
@@ -228,7 +228,7 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                 if (result.size() != 0) { //api 결과가 0이 아니면 adapter에 연결
                     searchAdapter = new SearchAdapter(result);
                     LinearLayoutManager layoutManager = new LinearLayoutManager(FindActivity.this, LinearLayoutManager.VERTICAL, false); //레이아웃매니저 생성
-                    rl_search.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//아래구분선
+//                    rl_search.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));//아래구분선
                     rl_search.setLayoutManager(layoutManager);
                     rl_search.setAdapter(searchAdapter);
 
@@ -640,6 +640,8 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
 //                        aSwitch.setChecked(false);
 //                        aSwitch.setClickable(true);
                         aSwitch.setVisibility(View.VISIBLE);
+                        aSwitch.setClickable(false);
+                        aSwitch.setFocusable(false);
 
                         //직선 연결 옵션
                         MapPointBounds mapPointBounds = new MapPointBounds(polyline.getMapPoints());
@@ -691,10 +693,14 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                                                 CODE_flag = response.body().get("flag");
 
                                                 if (CODE_flag.equals("1")) {
+                                                    aSwitch.setClickable(true);
+                                                    aSwitch.setFocusable(true);
                                                     aSwitch.setChecked(true);
                                                     Toast.makeText(FindActivity.this, "내 코스에 저장되어 있는 코스입니다 😗", Toast.LENGTH_SHORT).show();
                                                 } else {
                                                     aSwitch.setChecked(false);
+                                                    aSwitch.setClickable(true);
+                                                    aSwitch.setFocusable(true);
                                                 }
 //                                                    if(response.body() != null) {
 //                                                        Map<String, String> result = response.body();
@@ -795,7 +801,6 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
                             TextView tv_review3 = (TextView) storeInfo_dialog.findViewById(R.id.storeInfo_tv_reivew3);
                             Button storeInfo_btn_phone = storeInfo_dialog.findViewById(R.id.storeInfo_btn_phone);
                             Button storeInfo_btn_road = storeInfo_dialog.findViewById(R.id.storeInfo_btn_road);
-
 
                             tv_place_name.setText(placeName);
                             tv_category.setText(category);
