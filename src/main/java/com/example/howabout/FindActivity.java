@@ -955,9 +955,13 @@ public class FindActivity extends AppCompatActivity implements MapView.CurrentLo
             sharedPreferences = getSharedPreferences("USER", Activity.MODE_PRIVATE);
             String token = sharedPreferences.getString("token", null);
             if (token != null) {
-                Log.i("leehj", "token: " + token);
-                aSwitch.setOnCheckedChangeListener(check_switch);
-                return false;
+                if(aSwitch.isFocusable() == false){
+                    Toast.makeText(FindActivity.this, "잠시만 기다려주세요!", Toast.LENGTH_SHORT).show();
+                }else {
+                    Log.i("leehj", "token: " + token);
+                    aSwitch.setOnCheckedChangeListener(check_switch);
+                }
+                    return false;
             } else {
                 Toast.makeText(FindActivity.this, "로그인 후 이용 가능한 서비스입니다.", Toast.LENGTH_SHORT).show();
                 return true;

@@ -202,7 +202,7 @@ public class PopularActivity extends AppCompatActivity {
                             //보여줄 listview 불러오기
                             listView = findViewById(R.id.popular_list);
                             //arraylist url에 서버에서 받은 값 (카페 url) 저장
-                            urllist.add("http:" + jsonObject.get("c_image_url").toString());
+                            urllist.add("http:" + jsonObject.get("r_image_url").toString());
                             //arraylist text에 서버에서 받은 값 (카페 text) 저장
                             textlist.add(jsonObject.get("c_do").toString() + " " + jsonObject.get("c_si") + " 코스");
                             //객체 불러오기 (list custom)

@@ -117,9 +117,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
-                android:background="@drawable/edge_black"
+                android:background="@drawable/round_btn"
                 android:drawableStart="@drawable/ic_baseline_key_24"
                 android:hint="  인증 번호"
+                android:fontFamily="@font/godo_m"
                 android:inputType="textEmailAddress"
                 android:padding="12dp"
                 android:singleLine="true"
@@ -138,6 +139,8 @@
                 android:layout_weight="1"
                 android:backgroundTint="#ff5757"
                 android:text="확인"
+                android:background="@drawable/round_btn"
+                android:fontFamily="@font/godo_m"
                 android:textColor="#fff"
                 android:textSize="12dp" />
         </LinearLayout>
